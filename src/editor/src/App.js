@@ -28,15 +28,12 @@ export default class App extends Component {
   getActiveViewJSX(){
     const activeView = this.state.activeView;
     if(activeView === 'editing-view-tab'){
-      console.log('editing-view');
       return <EditingView />;
     }
     else if(activeView === 'assets-view-tab'){
-      console.log('assets-view');
       return <AssetsView />;
     }
     else if(activeView === 'shader-view-tab'){
-      console.log('shader-view');
       return <ShaderView />;
     }
     else{

@@ -1,0 +1,6 @@
+#node-drawing-pane{
+  width: 100vw;
+  height: calc(100vh);
+  position: absolute;
+  top: 0px;
+}
