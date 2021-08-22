@@ -21,12 +21,21 @@ import {configureFlumeVec4ConstNode} from '../../../application/js/editor/nodes/
 import {configureFlumeInequalityNode} from '../../../application/js/editor/nodes/inequalities/Inequality.js';
 import {configureFlumeInRangeNode} from '../../../application/js/editor/nodes/inequalities/InRange.js';
 
+//Operators
+import {configureFlumeBooleanOperatorsNode} from '../../../application/js/editor/nodes/operators/Boolean.js';
+import {configureChannelSplitterNode} from '../../../application/js/editor/nodes/operators/ChannelSplitter.js';
+import {configureClampOperatorNode} from '../../../application/js/editor/nodes/operators/Clamp.js';
+import {configureFlumeColorOperatorsNode} from '../../../application/js/editor/nodes/operators/Color.js';
+import {configureFlumeCoordinatesTransformationNode} from '../../../application/js/editor/nodes/operators/Coordinates.js';
+import {configureAddNormals} from '../../../application/js/editor/nodes/operators/AddNormals.js'
+import {configureMathNode} from '../../../application/js/editor/nodes/operators/Math.js';
+
 //Outputs
-import {configureStandardMaterialNode} from '../../../application/js/editor/nodes/outputs/StandardMaterial.js'
-import {configureFlumeRF32MaterialNode} from '../../../application/js/editor/nodes/outputs/rfp32Material.js'
-import {configureFlumeRGF32MaterialNode} from '../../../application/js/editor/nodes/outputs/rgfp32Material.js'
-import {configureFlumeRGBF32MaterialNode} from '../../../application/js/editor/nodes/outputs/rgbfp32Material.js'
-import {configureFlumeRGBA8MaterialNode} from '../../../application/js/editor/nodes/outputs/rgba8Material.js'
+import {configureStandardMaterialNode} from '../../../application/js/editor/nodes/outputs/StandardMaterial.js';
+// import {configureFlumeRF32MaterialNode} from '../../../application/js/editor/nodes/outputs/rfp32Material.js';
+// import {configureFlumeRGF32MaterialNode} from '../../../application/js/editor/nodes/outputs/rgfp32Material.js';
+// import {configureFlumeRGBF32MaterialNode} from '../../../application/js/editor/nodes/outputs/rgbfp32Material.js';
+// import {configureFlumeRGBA8MaterialNode} from '../../../application/js/editor/nodes/outputs/rgba8Material.js';
 
 //Set up a new material node
 const flumeConfig = new FlumeConfig();
@@ -51,6 +60,15 @@ configureFlumeVec4ConstNode(flumeConfig);
 //Inequalities
 configureFlumeInequalityNode(flumeConfig);
 configureFlumeInRangeNode(flumeConfig);
+
+//Operators
+configureAddNormals(flumeConfig);
+configureFlumeBooleanOperatorsNode(flumeConfig);
+configureChannelSplitterNode(flumeConfig);
+configureClampOperatorNode(flumeConfig);
+configureFlumeColorOperatorsNode(flumeConfig);
+configureFlumeCoordinatesTransformationNode(flumeConfig);
+configureMathNode(flumeConfig);
 
 //Set up the output
 configureStandardMaterialNode(flumeConfig);

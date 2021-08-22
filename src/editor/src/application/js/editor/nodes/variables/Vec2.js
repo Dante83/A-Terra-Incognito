@@ -5,11 +5,11 @@ export function configureFlumeVec2Node(config){
     description: "A vector with two elements.",
     initialWidth: 150,
     inputs: ports => [
-      ports.float(),
-      ports.float()
+      ports.float({name: 'x', label: 'x'}),
+      ports.float({name: 'y', label: 'y'})
     ],
     outputs: ports => [
-      ports.vec2()
+      ports.vec2({name: 'vec2', label: '2-Vector'})
     ],
   });
 };

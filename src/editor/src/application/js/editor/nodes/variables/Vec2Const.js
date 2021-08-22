@@ -5,11 +5,11 @@ export function configureFlumeVec2ConstNode(config){
     description: "A const vector with two elements.",
     initialWidth: 150,
     inputs: ports => [
-      ports.floatConst({name: 'element1', label: 'Element 1'}),
-      ports.floatConst({name: 'element2', label: 'Element 2'})
+      ports.floatConst({name: 'x', label: 'x'}),
+      ports.floatConst({name: 'y', label: 'y'})
     ],
     outputs: ports => [
-      ports.vec2()
+      ports.vec2({name: 'vec2', label: '2-Vector'})
     ],
   });
 };

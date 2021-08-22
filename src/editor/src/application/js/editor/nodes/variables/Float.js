@@ -9,7 +9,7 @@ export function configureFlumeFloatNode(config){
       ports.floatConst()
     ],
     outputs: ports => [
-      ports.float()
+      ports.float({name: 'float', label: 'Float'})
     ]
   });
 };

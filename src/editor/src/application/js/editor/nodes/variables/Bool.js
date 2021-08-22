@@ -9,7 +9,7 @@ export function configureFlumeBoolNode(config){
       ports.booleanConst()
     ],
     outputs: ports => [
-      ports.boolean()
+      ports.boolean({name: 'bool', label: 'Boolean'})
     ]
   });
 };

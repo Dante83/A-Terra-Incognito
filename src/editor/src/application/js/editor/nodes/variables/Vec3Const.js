@@ -5,12 +5,12 @@ export function configureFlumeVec3ConstNode(config){
     description: "A const vector with three elements.",
     initialWidth: 150,
     inputs: ports => [
-      ports.floatConst({name: 'element1', label: 'Element 1'}),
-      ports.floatConst({name: 'element2', label: 'Element 2'}),
-      ports.floatConst({name: 'element3', label: 'Element 3'})
+      ports.floatConst({name: 'x', label: 'x'}),
+      ports.floatConst({name: 'y', label: 'y'}),
+      ports.floatConst({name: 'z', label: 'z'})
     ],
     outputs: ports => [
-      ports.vec3()
+      ports.vec3({name: 'vec3', label: '3-Vector'})
     ],
   });
 };

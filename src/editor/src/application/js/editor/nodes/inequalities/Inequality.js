@@ -1,5 +1,3 @@
-import { Controls } from 'flume'
-
 export function configureFlumeInequalityNode(config){
   config.addNodeType({
     type: "inequality",
@@ -23,10 +21,11 @@ export function configureFlumeInequalityNode(config){
       }
       else{
         if(!ipts.valIfTrue){
-          return [ports.boolean({name: 'booleanValue', label: 'True/False'})];
+          return [ports.boolean({name: 'boolean', label: 'True/False'})];
         }
         else{
-          return [ports[ipts.valIfTrue[0].portName]({name: 'output', label: 'Output'})]
+          const portName = ipts.valIfTrue[0].portName;
+          return [ports[portName]({name: portName, label: 'Output'})]
         }
       }
     }

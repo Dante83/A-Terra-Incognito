@@ -1,4 +1,4 @@
-import React, { useRef, useState, Component } from 'react';
+import React, { useRef, Component } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import './PreviewPane.css';
 
