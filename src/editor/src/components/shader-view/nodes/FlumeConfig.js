@@ -29,6 +29,12 @@ import {configureFlumeColorOperatorsNode} from '../../../application/js/editor/n
 import {configureFlumeCoordinatesTransformationNode} from '../../../application/js/editor/nodes/operators/Coordinates.js';
 import {configureAddNormals} from '../../../application/js/editor/nodes/operators/AddNormals.js'
 import {configureMathNode} from '../../../application/js/editor/nodes/operators/Math.js';
+import {configureMatrixMathNode} from '../../../application/js/editor/nodes/operators/MatrixMath.js';
+import {configureMixOperatorNode} from '../../../application/js/editor/nodes/operators/Mix.js'
+import {configureRotationNode} from '../../../application/js/editor/nodes/operators/Rotation.js'
+import {configureSmoothstepNode} from '../../../application/js/editor/nodes/operators/Smoothstep.js'
+import {configureTrigFunctionsNode} from '../../../application/js/editor/nodes/operators/TrigFunctions.js'
+import {configureVectorMathNode} from '../../../application/js/editor/nodes/operators/VectorMath.js'
 
 //Outputs
 import {configureStandardMaterialNode} from '../../../application/js/editor/nodes/outputs/StandardMaterial.js';
@@ -67,8 +73,14 @@ configureFlumeBooleanOperatorsNode(flumeConfig);
 configureChannelSplitterNode(flumeConfig);
 configureClampOperatorNode(flumeConfig);
 configureFlumeColorOperatorsNode(flumeConfig);
-configureFlumeCoordinatesTransformationNode(flumeConfig);
+//configureFlumeCoordinatesTransformationNode(flumeConfig);
 configureMathNode(flumeConfig);
+configureMatrixMathNode(flumeConfig);
+configureMixOperatorNode(flumeConfig);
+configureRotationNode(flumeConfig);
+configureSmoothstepNode(flumeConfig);
+configureTrigFunctionsNode(flumeConfig);
+configureVectorMathNode(flumeConfig);
 
 //Set up the output
 configureStandardMaterialNode(flumeConfig);

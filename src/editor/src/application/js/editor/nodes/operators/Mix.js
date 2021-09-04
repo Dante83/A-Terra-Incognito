@@ -1,4 +1,4 @@
-export function configureClampOperatorNode(config){
+export function configureMixOperatorNode(config){
   config.addNodeType({
     type: "mixOperator",
     label: "Mix",
@@ -16,30 +16,34 @@ export function configureClampOperatorNode(config){
         ipts.interpolant && ipts.interpolant[0].portName &&
         ipts.startValue[0].portName === ipts.endValue[0].portName
       ){
-        const op1Type = ipts.startValue[0].portName;
-        let operand1Size = 0;
-        if(op1Type !== 'float'){
-          operand1Size = parseInt(op1Type.match(/\d+/)[0]);
+        const startValue = ipts.startValue[0].portName;
+        let operand1Size = 1;
+        if(startValue !== 'float'){
+          operand1Size = parseInt(startValue.match(/\d+/)[0]);
         }
-        const op2Type = ipts.endValue[0].portName;
-        let operand2Size = 0;
-        if(op2Type !== 'float'){
-          operand2Size = parseInt(op2Type.match(/\d+/)[0]);
+        const endValue = ipts.endValue[0].portName;
+        let operand2Size = 1;
+        if(endValue !== 'float'){
+          operand2Size = parseInt(endValue.match(/\d+/)[0]);
         }
-        const op3Type = ipts.interpolant[0].portName;
-        let operand3Size = 0;
-        if(op3Type !== 'float'){
-          operand3Size = parseInt(op3Type.match(/\d+/)[0]);
+        const interpolant = ipts.interpolant[0].portName;
+        let operand3Size = 1;
+        if(interpolant !== 'float'){
+          operand3Size = parseInt(interpolant.match(/\d+/)[0]);
         }
 
-        if(operand1Size === operand2Size && (operand3Size === 1 || operand3Size === operand2Size)){
-          const portName = ipts.inputValue[0].portName;
+        const invalidOperator = Symbol('Invalid Rank');
+        const startValueRank = startValue.includes('float') ? 0 : (startValue.includes('vec') ? 1 : invalidOperator);
+        const endValueRank = endValue.includes('float') ? 0 : (endValue.includes('vec') ? 1 : invalidOperator);
+        const mixValueRank = interpolant.includes('float') ? 0 : (interpolant.includes('vec') ? 1 : invalidOperator);
 
-          if(operand1Rank === 0){
-            return [ports[portName]({name: portName, label: 'Float'})];
+        if((operand1Size === operand2Size && (operand3Size === 1 || operand3Size === operand2Size)) &&
+        (startValueRank !== invalidOperator && startValueRank === endValueRank && (mixValueRank === 0 || mixValueRank === endValueRank))){
+          if(startValueRank === 0){
+            return [ports[startValue]({name: startValue, label: 'Float'})];
           }
-          else if(operand1Rank === 1){
-            return [ports[portName]({name: portName, label: `${operand1Size}-Vector`})];
+          else if(startValueRank === 1){
+            return [ports[startValue]({name: startValue, label: `${operand1Size}-Vector`})];
           }
           else{
             return [];

@@ -190,31 +190,30 @@ export default function setFlumePortTypes(config){
           {value: "dist", label: "DISTANCE"},
           {value: "distSq", label: "DISTANCE SQUARED"},
           {value: "manhattan", label: "MANHATTAN DISTANCE"},
-          {value: "reduce_size", label: "REDUCE SIZE"},
-          {value: "expand_size", label: "EXPAND SIZE"}
+          {value: "expand_size", label: "GROW"},
+          {value: "reduce_size", label: "SHRINK"}
         ]
       })
     ]
   });
 
   config.addPortType({
-    type: 'matrixFunctionSelector',
-    name: 'matrixFunctionSelector',
-    label: 'Matrix Functions',
+    type: 'matrixMathFunctionSelector',
+    name: 'matrixMathFunctionSelector',
+    label: 'Matrix Math Functions',
     color: Colors.grey,
     hidePort: true,
     controls: [
       Controls.select({
-        name: "matrixFunctionSelector",
+        name: "matrixMathFunctionSelector",
         label: "Matrix Function",
-        defaultValue: "dot",
+        defaultValue: "transpose",
         options: [
-          {value: "matMult", label: "MATRIX MULTIPLY"},
-          {value: "inv", label: "MATRIX INVERSE"},
-          {value: "trace", label: "TRACE"},
           {value: "transpose", label: "TRANSPOSE"},
-          {value: "reduce_size", label: "REDUCE SIZE"},
-          {value: "expand_size", label: "EXPAND SIZE"}
+          {value: "inv", label: "INVERSE"},
+          {value: "reduce_size", label: "SHRINK"},
+          {value: "expand_size", label: "GROW"},
+          {value: "trace", label: "TRACE"}
         ]
       })
     ]
@@ -247,48 +246,93 @@ export default function setFlumePortTypes(config){
   });
 
   config.addPortType({
-    type: 'twoDimensionalCoordinateTransformation',
-    name: 'twoDimensionalCoordinateTransformation',
-    label: '2-D Coordinate Transformation',
+    type: 'vec2RotationOrderSelector',
+    name: 'vec2RotationOrderSelector',
+    label: 'Rotation Order',
     color: Colors.grey,
     hidePort: true,
     controls: [
       Controls.select({
-        name: "twoDimensionalCoordinateTransformation",
-        label: "2-D Coordinate Transformation",
-        defaultValue: "cartesian2Polar",
+        name: "vec2RotationOrderSelector",
+        label: "Rotation Order",
+        defaultValue: "xy",
         options: [
-          {value: "cartesian2Polar", label: "CARTESIAN TO POLAR"},
-          {value: "polar2Cartesian", label: "POLAR TO CARTESIAN"},
-          {value: "cartesian2Barycentric", label: "CARTESIAN TO BARYCENTRIC"},
-          {value: "barycentric2Cartesian", label: "BARYCENTRIC TO CARTESIAN"}
+          {value: "xy", label: "XY"},
+          {value: "yx", label: "YX"},
         ]
       })
     ]
   });
 
   config.addPortType({
-    type: 'threeDimensionalCoordinateTransformation',
-    name: 'threeDimensionalCoordinateTransformation',
-    label: '3-D Coordinate Transformation',
+    type: 'vec3RotationOrderSelector',
+    name: 'vec3RotationOrderSelector',
+    label: 'Rotation Order',
     color: Colors.grey,
     hidePort: true,
     controls: [
       Controls.select({
-        name: "threeDimensionalCoordinateTransformation",
-        label: "3-D Coordinate Transformation",
-        defaultValue: "cartesian2Spherical",
+        name: "vec3RotationOrderSelector",
+        label: "Rotation Order",
+        defaultValue: "xyz",
         options: [
-          {value: "cartesian2Spherical", label: "CARTESIAN TO SPHERICAL"},
-          {value: "sperhical2Cartesian", label: "SPHERICAL TO CARTESIAN"},
-          {value: "cartesian2Cylindrical", label: "CARTESIAN TO CYLINDRICAL"},
-          {value: "cylindrical2Cartesian", label: "CYLINDRICAL TO CARTESIAN"},
-          {value: "cartesian2Barycentric", label: "CARTESIAN TO BARYCENTRIC"},
-          {value: "barycentric2Cartesian", label: "BARYCENTRIC TO CARTESIAN"}
+          {value: "xyz", label: "XYZ"},
+          {value: "yzx", label: "YZX"},
+          {value: "zxy", label: "ZXY"},
+          {value: "yxz", label: "YXZ"},
+          {value: "xzy", label: "XZY"},
+          {value: "zyx", label: "ZYX"},
         ]
       })
     ]
   });
+
+  //
+  //TODO: We can add these in later when they're needed
+  //
+  // config.addPortType({
+  //   type: 'twoDimensionalCoordinateTransformation',
+  //   name: 'twoDimensionalCoordinateTransformation',
+  //   label: '2-D Coordinate Transformation',
+  //   color: Colors.grey,
+  //   hidePort: true,
+  //   controls: [
+  //     Controls.select({
+  //       name: "twoDimensionalCoordinateTransformation",
+  //       label: "2-D Coordinate Transformation",
+  //       defaultValue: "cartesian2Polar",
+  //       options: [
+  //         {value: "cartesian2Polar", label: "CARTESIAN TO POLAR"},
+  //         {value: "polar2Cartesian", label: "POLAR TO CARTESIAN"},
+  //         {value: "cartesian2Barycentric", label: "CARTESIAN TO BARYCENTRIC"},
+  //         {value: "barycentric2Cartesian", label: "BARYCENTRIC TO CARTESIAN"}
+  //       ]
+  //     })
+  //   ]
+  // });
+  //
+  // config.addPortType({
+  //   type: 'threeDimensionalCoordinateTransformation',
+  //   name: 'threeDimensionalCoordinateTransformation',
+  //   label: '3-D Coordinate Transformation',
+  //   color: Colors.grey,
+  //   hidePort: true,
+  //   controls: [
+  //     Controls.select({
+  //       name: "threeDimensionalCoordinateTransformation",
+  //       label: "3-D Coordinate Transformation",
+  //       defaultValue: "cartesian2Spherical",
+  //       options: [
+  //         {value: "cartesian2Spherical", label: "CARTESIAN TO SPHERICAL"},
+  //         {value: "sperhical2Cartesian", label: "SPHERICAL TO CARTESIAN"},
+  //         {value: "cartesian2Cylindrical", label: "CARTESIAN TO CYLINDRICAL"},
+  //         {value: "cylindrical2Cartesian", label: "CYLINDRICAL TO CARTESIAN"},
+  //         {value: "cartesian2Barycentric", label: "CARTESIAN TO BARYCENTRIC"},
+  //         {value: "barycentric2Cartesian", label: "BARYCENTRIC TO CARTESIAN"}
+  //       ]
+  //     })
+  //   ]
+  // });
 
   config.addPortType({
     type: 'any',
@@ -309,6 +353,15 @@ export default function setFlumePortTypes(config){
   });
 
   config.addPortType({
+    type: 'anyVector',
+    name: 'anyVector',
+    label: 'Any Vector',
+    color: Colors.green,
+    noControls: true,
+    acceptTypes: ['vec2', 'vec3', 'vec4']
+  });
+
+  config.addPortType({
     type: 'vec2OrVec3',
     name: 'vec2OrVec3',
     label: '2-Vector or 3-Vector',
@@ -324,6 +377,15 @@ export default function setFlumePortTypes(config){
     color: Colors.grey,
     noControls: true,
     acceptTypes: ['float', 'vec2', 'vec3', 'vec4']
+  });
+
+  config.addPortType({
+    type: 'anyRank2',
+    name: 'anyRank2',
+    label: 'Any Matrix',
+    color: Colors.red,
+    noControls: true,
+    acceptTypes: ['mat2', 'mat3', 'mat4']
   });
 
   config.addPortType({

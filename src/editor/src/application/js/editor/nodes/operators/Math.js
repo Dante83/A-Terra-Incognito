@@ -42,7 +42,6 @@ export function configureMathNode(config){
       const selectedOperation = data.mathOperatorSelector.mathOperatorSelector;
       const ipts = connections.inputs;
       const hasOneInput = ['square', 'exp', 'sqrt', 'ln'].includes(selectedOperation);
-      console.log(ipts);
       if(ipts.hasOwnProperty('operand1') && ipts.hasOwnProperty('operand2') && !hasOneInput){
         const op1Type = ipts.operand1[0].portName;
         const op2Type = ipts.operand2[0].portName;
