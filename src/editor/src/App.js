@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import store from './Store.js';
+import { useSelector, useDispatch } from 'react-redux'
+import { Provider } from 'react-redux';
 import Toolstrip from './components/toolstrip/Toolstrip.js'
 import ShaderView from './components/shader-view/ShaderView.js'
 import EditingView from './components/editing-view/EditingView.js'
@@ -46,12 +49,14 @@ export default class App extends Component {
     FocusStyleManager.onlyShowFocusOnTabs();
 
     return(
-      <div className="bp3-dark">
-        <Toolstrip onActiveViewChange={this.handleActiveViewChange} />
-        <div>
-          {this.getActiveViewJSX()}
+      <Provider store={store}>
+        <div className="bp3-dark">
+          <Toolstrip onActiveViewChange={(e)=>dispatch(changeActiveView(e))} />
+          <div>
+            {this.getActiveViewJSX()}
+          </div>
         </div>
-      </div>
+      </Provider>
     );
   }
 }

@@ -1,0 +1,46 @@
+#shader-preview-panel{
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#shader-preview-flex-container{
+  display: flex;
+  flex-flow: column;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  height: 100%;
+  flex: 1;
+}
+
+#shader-preview-header{
+  height: 1em;
+  margin-top: 0.67em;
+  padding-top: 0;
+}
+
+#shader-preview{
+  border: solid 3px #30404D;
+  background: #182026;
+  flex-grow: 1;
+}
+
+#shader-preview-footer{
+  margin: 0.25em 0 0.25em 0;
+}
+
+#footer-flexbox-container{
+  display: flex;
+}
+
+#preview-object-select-box{
+  flex-grow: 1;
+}
+
+#preview-play-pause-buttons{
+  width: 32;
+  float: right;
+}

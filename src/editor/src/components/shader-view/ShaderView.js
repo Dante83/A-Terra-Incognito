@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Mosaic, MosaicWindow } from 'react-mosaic-component';
 import NodeGraphPane from './NodeGraphPane.js';
 import PreviewPane from './PreviewPane.js';
+import ResourcePane from './ResourcePane.js';
 import './ShaderView.css';
 import '../../../node_modules/react-mosaic-component/react-mosaic-component.css';
 import '../../../node_modules/normalize.css/normalize.css';
@@ -15,7 +16,7 @@ const ELEMENT_MAP: { [viewId: string]: JSX.Element } = {
     <NodeGraphPane/>
   </div>,
   'preview-pane': <PreviewPane/>,
-  'resource-pane': <div id="bottom-shader-view-window">Shader Assets Window</div>,
+  'resource-pane': <ResourcePane/>,
 };
 
 export default class ShaderView extends Component {

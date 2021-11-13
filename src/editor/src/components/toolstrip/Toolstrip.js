@@ -33,11 +33,11 @@ export default class Toolstrip extends Component {
           <Popover content={<Menu>...</Menu>} position={Position.BOTTOM_LEFT}>
               <Button className="bp3-button bp3-minimal">Render</Button>
           </Popover>
-          <Divider />
+          <Navbar.Divider />
           <Tabs id="viewport-selector-tabs" onChange={this.onChangeView} selectedTabId={activeView}>
             <Tab id="assets-view-tab" title="Assets" />
-            <Tab id="shader-view-tab" title="Shaders" />
-            <Tab id="editing-view-tab" title="Editing" />
+            <Tab id="shader-view-tab" title="Materials" />
+            <Tab id="editing-view-tab" title="World Editor" />
           </Tabs>
         </Navbar.Group>
       </Navbar>

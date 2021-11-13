@@ -1,0 +1,48 @@
+#material-selector-panel{
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#material-selector-flex-container{
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  flex: 1;
+}
+
+#material-selector-footer{
+  margin-left: 0.25em;
+}
+
+#add-delete-shader-buttons{
+  margin: 0.25em 0.25em 0.25em 0;
+  float: right;
+}
+
+#material-selector-list-container{
+  flex: 1;
+  overflow-x: overflow;
+  overflow-y: scroll;
+  background: #202B33;
+}
+
+#material-selector-list-flex-box{
+  display: flex;
+  flex-flow: column;
+}
+
+#material-selector-list-filler{
+  width: 100%;
+  flex-grow: 1;
+}
+
+#material-selector-header{
+  height: 1em;
+  margin-top: 0.67em;
+  margin-left: 0.25em;
+  padding-top: 0;
+}
