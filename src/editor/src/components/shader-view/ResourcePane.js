@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import './ResourcePane.css';
 
-export default class ResourcePane extends Component {
-  render(){return(
+export default function ResourcePane(){
+  return(
     <div id="material-selector-panel">
       <section id="material-selector-flex-container">
         <header id="material-selector-header">
@@ -11,8 +11,10 @@ export default class ResourcePane extends Component {
         <div id="material-selector-list-container">
           <div id="material-selector-list-flex-box">
             <div class="bp3-button-group bp3-fill bp3-vertical">
-              <a class="bp3-button">Height Map</a>
-              <a class="bp3-button">Surface Material Map</a>
+              <a class="bp3-button">Terrain Heightmap</a>
+            </div>
+            <div class="bp3-button-group bp3-fill bp3-vertical">
+              <a class="bp3-button">Terrain Material Map</a>
             </div>
             <div div="material-selector-list-filler"></div>
           </div>
@@ -29,5 +31,5 @@ export default class ResourcePane extends Component {
         </footer>
       </section>
     </div>
-  );}
+  );
 }
