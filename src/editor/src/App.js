@@ -6,7 +6,7 @@ import Toolstrip from './components/toolstrip/Toolstrip.js';
 import ShaderView from './components/shader-view/ShaderView.js';
 import EditingView from './components/editing-view/EditingView.js';
 import AssetsView from './components/assets-view/AssetsView.js';
-import { FocusStyleManager } from "@blueprintjs/core";
+import { Alert, Button, Intent, FocusStyleManager } from "@blueprintjs/core";
 import '../node_modules/normalize.css/normalize.css';
 import '../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../node_modules/@blueprintjs/core/lib/css/blueprint.css';

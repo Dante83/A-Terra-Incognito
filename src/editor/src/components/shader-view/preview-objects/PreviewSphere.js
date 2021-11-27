@@ -15,7 +15,7 @@ export default function Sphere(props) {
       {...props}
       ref={mesh}
       scale={5.0}>
-      <sphereGeometry args={[1, 1, 1]} />
+      <sphereGeometry args={[0.75, 256, 128]} />
       <meshStandardMaterial color={'orange'} />
     </mesh>
   )

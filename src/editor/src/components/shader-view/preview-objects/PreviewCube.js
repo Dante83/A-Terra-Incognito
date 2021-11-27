@@ -15,7 +15,7 @@ export default function Cube(props) {
       {...props}
       ref={mesh}
       scale={5.0}>
-      <boxGeometry args={[1, 1, 1]} />
+      <boxGeometry args={[1, 1, 1, 256, 256, 256]} />
       <meshStandardMaterial color={'orange'} />
     </mesh>
   )

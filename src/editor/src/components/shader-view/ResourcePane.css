@@ -46,3 +46,8 @@
   margin-left: 0.25em;
   padding-top: 0;
 }
+
+#selected-material-button{
+  background-color: #BFCCD6;
+  color: #10161A;
+}

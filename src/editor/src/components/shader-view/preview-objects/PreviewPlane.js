@@ -1,4 +1,5 @@
 import React, { useRef, Component } from 'react';
+import { DoubleSide } from 'three';
 import { useFrame } from '@react-three/fiber';
 
 export default function Plane(props) {
@@ -15,8 +16,8 @@ export default function Plane(props) {
       {...props}
       ref={mesh}
       scale={5.0}>
-      <planeGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={'orange'} />
+      <planeGeometry args={[1.25, 1.25, 256, 256]} />
+      <meshStandardMaterial color={'orange'} side={DoubleSide} />
     </mesh>
   )
 }

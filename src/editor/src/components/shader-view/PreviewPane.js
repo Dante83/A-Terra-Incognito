@@ -7,7 +7,7 @@ import {HTMLSelect} from "@blueprintjs/core";
 import Cube from './preview-objects/PreviewCube.js';
 import Sphere from './preview-objects/PreviewSphere.js';
 import Plane from './preview-objects/PreviewPlane.js';
-import Image from './preview-objects/PreviewImage.js';
+import PreviewImage from './preview-objects/PreviewImage.js';
 import './PreviewPane.css';
 
 const previewObjectOptions = ['Cube', 'Sphere', 'Plane', 'Image'];
@@ -20,8 +20,8 @@ function previewObject(activePreviewObject, isRotating){
       return <Sphere position={[0, 0, -3]} isRotating={isRotating} />;
     case 'plane':
       return <Plane position={[0, 0, -3]} isRotating={isRotating} />;
-    case 'Image':
-      return <Image position={[0, 0, -3]} isRotating={isRotating} />;
+    case 'image':
+      return <PreviewImage position={[0, 0, -3]} />;
     default :
       //Default to nothing, better to have an empty space if we
       //can't show anything at all
@@ -36,7 +36,11 @@ export default function PreviewPane(){
   const dispatch = useDispatch();
   let pausePreviewButtonClasses;
   let playPreviewButtonClasses;
-  if(isRotating){
+  if(activePreviewObject === "image"){
+    playPreviewButtonClasses = "bp3-button bp3-intent-primary hidden";
+    pausePreviewButtonClasses = "bp3-button bp3-intent-warning hidden";
+  }
+  else if(isRotating){
     playPreviewButtonClasses = "bp3-button bp3-intent-primary hidden";
     pausePreviewButtonClasses = "bp3-button bp3-intent-warning";
   }
