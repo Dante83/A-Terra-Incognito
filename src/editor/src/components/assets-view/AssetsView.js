@@ -5,13 +5,14 @@ import '../../../node_modules/react-mosaic-component/react-mosaic-component.css'
 import '../../../node_modules/normalize.css/normalize.css';
 import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
-import {DirectoryPane} from './DirectoryPane.js'
+import DirectoryPane from './DirectoryPane.js';
+import AssetsBrowserPane from './AssetsBrowserPane.js';
 
 const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
 
 const ELEMENT_MAP: { [viewId: string]: JSX.Element } = {
-  a: <div id="left-shader-view-window"></div>,
-  b: <div id="right-shader-view-window"></div>,
+  a: <DirectoryPane></DirectoryPane>,
+  b: <AssetsBrowserPane></AssetsBrowserPane>
 };
 
 export default class AssetsView extends Component {

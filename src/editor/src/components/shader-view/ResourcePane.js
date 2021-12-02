@@ -1,11 +1,9 @@
-import React, {Component} from 'react';
-import { store } from '../../application/js/Store.js';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { viewMaterialGraph, selectActiveMaterial, selectMaterialList } from '../../application/js/features/materialListPaneSlice.js';
+import { viewMaterialGraph, changeAddMaterialModalVisibility, selectActiveMaterial, selectMaterialList } from '../../application/js/features/materialListPaneSlice.js';
 import './ResourcePane.css';
 
 export default function ResourcePane(){
-  const state = store.getState();
   const activeMaterialName = useSelector(selectActiveMaterial);
   const materialsList = Object.keys(useSelector(selectMaterialList));
   const canDelete = activeMaterialName !== "Terrain Heightmap" && activeMaterialName !== "Terrain Material Map";
@@ -21,15 +19,15 @@ export default function ResourcePane(){
     const materialName = materialsList[i];
     if(materialName !== activeMaterialName){
       materialSelectionList.push(
-          <div class="bp3-button-group bp3-fill bp3-vertical">
-            <a class="bp3-button" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))}>{materialName}</a>
+          <div key={materialName} className="bp3-button-group bp3-fill bp3-vertical">
+            <span className="bp3-button" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))}>{materialName}</span>
           </div>
       );
     }
     else{
       materialSelectionList.push(
-          <div class="bp3-button-group bp3-fill bp3-vertical">
-            <a class="bp3-button" id="selected-material-button" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))}>{materialName}</a>
+          <div key={materialName} className="bp3-button-group bp3-fill bp3-vertical">
+            <span className="bp3-button" id="selected-material-button" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))}>{materialName}</span>
           </div>
       );
     }
@@ -39,7 +37,7 @@ export default function ResourcePane(){
     <div id="material-selector-panel">
       <section id="material-selector-flex-container">
         <header id="material-selector-header">
-          <h5 class="bp3-heading">Material Shaders</h5>
+          <h5 className="bp3-heading">Material Shaders</h5>
         </header>
         <div id="material-selector-list-container">
           <div id="material-selector-list-flex-box">
@@ -48,12 +46,12 @@ export default function ResourcePane(){
           </div>
         </div>
         <footer id="material-selector-footer">
-          <div class="bp3-button-group" id="add-delete-shader-buttons">
-            <button class="bp3-button bp3-intent-primary" id="add-shader-button">
-              <span class="bp3-icon bp3-icon-add" icon="add"></span>
+          <div className="bp3-button-group" id="add-delete-shader-buttons">
+            <button className="bp3-button bp3-intent-primary" id="add-shader-button" onClick={(e)=>dispatch(changeAddMaterialModalVisibility(true))} >
+              <span className="bp3-icon bp3-icon-add" icon="add"></span>
             </button>
             <button className={deleteButtonClasses} id="request-prompt-to-remove-shader-button">
-              <span class="bp3-icon bp3-icon-remove" icon="remove"></span>
+              <span className="bp3-icon bp3-icon-remove" icon="remove"></span>
             </button>
           </div>
         </footer>

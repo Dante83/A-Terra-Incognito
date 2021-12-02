@@ -8,7 +8,6 @@ export const previewPaneSlice = createSlice({
   },
   reducers: {
     changePreviewObject: (state, action) => {
-      console.log(action.payload);
       state.previewObject = action.payload;
     },
     toggleIsRotating: (state, action) => {

@@ -1,20 +1,39 @@
-import React, { useRef, Component } from 'react';
-import { Classes, Icon, Intent, Tree} from "@blueprintjs/core";
+import React from 'react';
+import '@blueprintjs/core/lib/css/blueprint.css';
+import { Tree, Classes } from "@blueprintjs/core";
 
-const texturesDirectory = {test: 'text1'};
-const gltfsDirectory = {};
-const soundsDirectory = {};
+export default function DirectoryPane(){
+  const sampleData = [
+      {
+        id: 0,
+        hasCaret: true,
+        icon: "folder-close",
+        label: "Textures"
+      },
+      {
+        id: 1,
+        hasCaret: true,
+        icon: "folder-close",
+        label: "Brushes"
+      },
+      {
+        id: 2,
+        hasCaret: true,
+        icon: "folder-close",
+        label: "3D Modals"
+      },
+    ];
 
-export default class DirectoryPane extends Component {
-  render(){return(
+  return(
     <div id="directory-panel">
       <section id="directory-panel-flex-container">
         <div id="directories">
-          <Tree id="textures-directory" contents={texturesDirectory}></Tree>
-          <Tree id="gltfs-directory" contents={gltfsDirectory}></Tree>
-          <Tree id="sounds-directory" contentst={soundsDirectory}></Tree>
+            <Tree
+              contents={sampleData}
+              className={Classes.ELEVATION_0}
+            />
         </div>
       </section>
     </div>
-  );}
+  );
 }

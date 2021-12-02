@@ -1,12 +1,11 @@
-import React, { Component, useState } from 'react';
-import { store } from './application/js/Store.js';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeWorkbenchView, selectWorkbenchView } from './application/js/features/workbenchSlice.js';
 import Toolstrip from './components/toolstrip/Toolstrip.js';
 import ShaderView from './components/shader-view/ShaderView.js';
 import EditingView from './components/editing-view/EditingView.js';
 import AssetsView from './components/assets-view/AssetsView.js';
-import { Alert, Button, Intent, FocusStyleManager } from "@blueprintjs/core";
+import { FocusStyleManager } from "@blueprintjs/core";
 import '../node_modules/normalize.css/normalize.css';
 import '../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../node_modules/@blueprintjs/core/lib/css/blueprint.css';
@@ -27,7 +26,6 @@ function getActiveViewJSX(activeView){
 }
 
 export default function App(){
-  const state = store.getState();
   const activeView = useSelector(selectWorkbenchView);
   const dispatch = useDispatch();
   FocusStyleManager.onlyShowFocusOnTabs();

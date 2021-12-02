@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { NodeEditor } from "flume";
 import flumeConfig from "./nodes/FlumeConfig.js";
 import './NodeGraphPane.css'

@@ -8,14 +8,14 @@ export default class FileMenu extends Component {
   render(){
     return(
       <Menu>
-        <MenuItem text="New" />
+        <MenuItem text="New Project" />
         <MenuItem text="Open" />
         <MenuItem text="Open Recent" />
         <MenuDivider/>
         <MenuItem text="Save" />
         <MenuItem text="Save As..." />
         <MenuDivider/>
-        <MenuItem text="Compile" />
+        <MenuItem text="Properties" />
       </Menu>
     );
   }

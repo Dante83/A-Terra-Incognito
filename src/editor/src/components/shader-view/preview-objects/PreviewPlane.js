@@ -1,4 +1,4 @@
-import React, { useRef, Component } from 'react';
+import React, { useRef } from 'react';
 import { DoubleSide } from 'three';
 import { useFrame } from '@react-three/fiber';
 

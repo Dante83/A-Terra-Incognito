@@ -9,8 +9,8 @@ import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
 
 const ELEMENT_MAP: { [viewId: string]: JSX.Element } = {
-  a: <div id="left-shader-view-window">Editor Workspace</div>,
-  b: <div id="right-shader-view-window">Editor Toolbox</div>,
+  a: <div id="left-shader-view-window"></div>,
+  b: <div id="right-shader-view-window"></div>,
 };
 
 export default class EditingView extends Component {

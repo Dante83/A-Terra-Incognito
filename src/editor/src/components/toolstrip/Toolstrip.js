@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import '../../../node_modules/normalize.css/normalize.css';
-import { Popover, Position, Menu, Button, Tab, Tabs, Divider,
-Navbar, Alignment } from "@blueprintjs/core";
+import { Popover, Position, Button, Tab, Tabs, Navbar, Alignment } from "@blueprintjs/core";
 import FileMenu from './FileMenu.js'
 import EditMenu from './EditMenu.js'
 import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
@@ -29,9 +28,6 @@ export default class Toolstrip extends Component {
           </Popover>
           <Popover content={<EditMenu selectedTabId={activeView}/>} position={Position.BOTTOM_LEFT}>
               <Button className="bp3-button bp3-minimal">Edit</Button>
-          </Popover>
-          <Popover content={<Menu>...</Menu>} position={Position.BOTTOM_LEFT}>
-              <Button className="bp3-button bp3-minimal">Render</Button>
           </Popover>
           <Navbar.Divider />
           <Tabs id="viewport-selector-tabs" onChange={this.onChangeView} selectedTabId={activeView}>
