@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectMaterialList, selectActiveMaterial, createOrUpdateMaterial } from '../../application/js/features/materialListPaneSlice.js';
-import { selectModalFormState, selectIsEditMaterialModalVisible, closeNewMaterialModal, validateMaterial } from '../../application/js/features/newMaterialModalSlice.js';
+import { selectModalFormState, selectIsEditMaterialModalVisible, closeNewMaterialModal, displayErrors } from '../../application/js/features/newMaterialModalSlice.js';
 import { Dialog, Label, InputGroup, FormGroup, Button, Intent, Position, Toaster } from "@blueprintjs/core";
 import '../../../node_modules/normalize.css/normalize.css';
 import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
@@ -9,6 +9,123 @@ import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 import './NewMaterialModal.css';
 
 const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
+
+function validateTextureSize(textureInputValue){
+  const noBlankFormFieldsError = 'This form field cannot be left blank.';
+  if(textureInputValue === null || textureInputValue === ''){
+    return [noBlankFormFieldsError];
+  }
+  else if((/^[1-9]\d*$/).test(textureInputValue)){
+    const parsedValue = parseInt(textureInputValue);
+    if(parsedValue < 2){
+      return ['This texture dimension is too small. Please make your texture bigger. Optimally between 64-256 pixels.'];
+    }
+    else if(parsedValue > 8192){
+      return ['This texture dimension is too large. Please make your texture smaller. Optimally between 64-256 pixels.'];
+    }
+    return [];
+  }
+  return ['This is not a valid number, please enter a natural number.'];
+}
+
+function submitFormAction(formValues, isUpdate, createOrUpdateMaterialReducer, displayErrorsReducer, closeModalReducer, dispatch, materialName){
+  const noBlankFormFieldsError = 'This form field cannot be left blank.';
+  let state = {
+    materialName: {
+      value: formValues.materialName,
+      errors: []
+    },
+    outputTextureWidth: {
+      value: formValues.outputTextureWidth,
+      errors: []
+    },
+    outputTextureHeight: {
+      value: formValues.outputTextureHeight,
+      errors: []
+    },
+    outputMaterialType: {
+      value: formValues.outputMaterialType,
+      errors: []
+    },
+    wrapS: {
+      value: formValues.wrapS,
+      errors: []
+    },
+    wrapW: {
+      value: formValues.wrapW,
+      errors: []
+    },
+    isUpdate: isUpdate,
+  };
+  let isValid = true;
+  const currentMaterialNames = formValues.currentMaterialNames;
+
+  //Material Name
+  if(!isUpdate){
+    const materialName = formValues.materialName;
+    state.materialName.errors = [];
+    if(materialName === null || materialName === ''){//Name must not be null
+      state.materialName.errors = [noBlankFormFieldsError];
+    }
+    else if(materialName.length > 64){//Name must be under 64 characters in length
+      state.materialName.errors = ['The material name must not be over 64 characters in length.'];
+    }
+    else if(!(/^[ A-Za-z0-9_@.~/#&+-\s!?%^$*()-\[\]\\]*$/i).test(materialName)){
+      //Name must contain only alphanumeric characters
+      state.materialName.errors = ['The material must only contain alphanumeric characters, spaces, and some special characters.'];
+    }
+    else if(currentMaterialNames.includes(materialName)){//Name must be unique
+      state.materialName.errors = ['The material name must be unique. No other material may share the same name as this material.'];
+    }
+    if(state.materialName.errors.length > 0){
+      isValid = false;
+    }
+  }
+
+  //Validation for output texture output texture width and height
+  let errors = validateTextureSize(formValues.outputTextureWidth);
+  state.outputTextureWidth.errors = [];
+  if(errors.length > 0){
+    state.outputTextureWidth.errors = [...errors];
+    isValid = false;
+  }
+
+  errors = validateTextureSize(formValues.outputTextureHeight);
+  state.outputTextureHeight.errors = [];
+  if(errors.length > 0){
+    state.outputTextureHeight.errors = [...errors];
+    isValid = false;
+  }
+
+  //Validation for the texture type
+  state.outputMaterialType.errors = [];
+  if(!['material', 'rgba8', 'rgb8', 'rgba32', 'rgb32', 'rg32', 'rfp32'].includes(formValues.outputMaterialType)){
+    state.outputMaterialType.errors = ['The selected Material Texture Type is not a valid option.'];
+    isValid = false;
+  }
+
+  //Validation for the Wrap S and Wrap W
+  state.wrapS.errors = [];
+  const validTextureWrapOptions = ['repeat', 'mirrored_repeat', 'clamp_to_edge'];
+  if(!validTextureWrapOptions.includes(formValues.wrapS)){
+    state.wrapS.errors = ['The selected Wrap S value is not a valid option.'];
+    isValid = false;
+  }
+
+  state.wrapW.errors = [];
+  if(!validTextureWrapOptions.includes(formValues.wrapW)){
+    state.wrapW.errors = ['The selected Wrap W value is not a valid option.'];
+    isValid = false;
+  }
+
+  if(isValid){
+    dispatch(createOrUpdateMaterialReducer(state));
+    dispatch(closeModalReducer());
+  }
+  else{
+    dispatch(displayErrorsReducer(state));
+  }
+}
 
 export default function NewMaterialModal(){
   const currentMaterials = useSelector(selectMaterialList);
@@ -28,19 +145,8 @@ export default function NewMaterialModal(){
       outputMaterialType: target[3].value,
       wrapS: target[4].value,
       wrapW: target[5].value,
-    }
-    dispatch(validateMaterial(formData));
-  }
-  if(currentModalData.isFormValid){
-    dispatch(createOrUpdateMaterial({
-      materialName: currentModalData.materialName.value,
-      outputTextureWidth: currentModalData.outputTextureWidth.value,
-      outputTextureHeight: currentModalData.outputTextureHeight.value,
-      outputMaterialType: currentModalData.outputMaterialType.value,
-      wrapS: currentModalData.wrapS.value,
-      wrapW: currentModalData.wrapW.value,
-    }));
-    dispatch(closeNewMaterialModal());
+    };
+    submitFormAction(formData, currentModalData.isUpdate, createOrUpdateMaterial, displayErrors, closeNewMaterialModal, dispatch);
   }
 
   return(
@@ -110,7 +216,7 @@ export default function NewMaterialModal(){
               helperText={currentModalData.wrapS.errors.join('<br/>')}
           >
             <div id="texture-wrap-s-selector" className="bp3-html-select .modifier bp3-fill">
-              <select  defaultValue={'repeat'}>
+              <select defaultValue={'repeat'}>
                 <option value="repeat">Repeat</option>
                 <option value="mirrored_repeat">Mirrored Repeat</option>
                 <option value="clamp_to_edge">Clamp To Edge</option>
@@ -127,7 +233,7 @@ export default function NewMaterialModal(){
               helperText={currentModalData.wrapW.errors.join('<br/>')}
           >
             <div id="texture-wrap-W-selector" className="bp3-html-select .modifier bp3-fill">
-              <select  defaultValue={'repeate'}>
+              <select defaultValue={'repeate'}>
                 <option value="repeat">Repeat</option>
                 <option value="mirrored_repeat">Mirrored Repeat</option>
                 <option value="clamp_to_edge">Clamp To Edge</option>

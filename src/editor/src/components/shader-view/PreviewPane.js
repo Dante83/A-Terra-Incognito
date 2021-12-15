@@ -57,8 +57,8 @@ export default function PreviewPane(){
         </Canvas>
         <footer id="shader-preview-footer">
           <div id="footer-flexbox-container">
-            <div id="preview-object-select-box" className="bp3-html-select">
-              <select value={activePreviewObject} onChange={(e)=>dispatch(changePreviewObject(e.target.value))}>
+            <div id="preview-object-select-box" className="bp3-html-select .modifier">
+              <select defaultValue={activePreviewObject} onChange={(e)=>dispatch(changePreviewObject(e.target.value))}>
                 <option value="cube">Cube</option>
                 <option value="sphere">Sphere</option>
                 <option value="plane">Plane</option>

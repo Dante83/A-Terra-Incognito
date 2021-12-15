@@ -23,7 +23,7 @@ function determineMaterialWrapping(wrapString){
 export const materialListPaneSlice = createSlice({
   name: 'materialListPane',
   initialState: {
-    deleteMaterialModalVisible: false,
+    deleteMaterialAlertVisible: false,
     activeMaterial: 'Terrain Heightmap',
     materialGraphs: {
       'Terrain Heightmap': {
@@ -56,22 +56,19 @@ export const materialListPaneSlice = createSlice({
       const payload = action.payload;
       const materialName = payload.materialName;
       if(payload.isUpdate){
-        state.materialGraphs[materialName] = {
-          ...state.materialGraphs[materialName],
-          outputTextureWidth: payload.outputTextureWidth,
-          outputTextureHeight: payload.outputTextureHeight,
-          outputMaterialType: payload.outputMaterialType,
-          wrapS: determineMaterialWrapping(payload.wrapS),
-          wrapW: determineMaterialWrapping(payload.wrapW),
-        };
+        state.materialGraphs[materialName].outputTextureWidth = payload.outputTextureWidth.value;
+        state.materialGraphs[materialName].outputTextureHeight = payload.outputTextureHeight.value;
+        state.materialGraphs[materialName].outputMaterialType = payload.outputMaterialType.value;
+        state.materialGraphs[materialName].wrapS = payload.wrapS.value;
+        state.materialGraphs[materialName].wrapW = payload.wrapW.value;
       }
       else{
-        state.materialGraphs[materialName] = {
-          outputTextureWidth: payload.outputTextureWidth,
-          outputTextureHeight: payload.outputTextureHeight,
-          outputMaterialType: payload.outputMaterialType,
-          wrapS: determineMaterialWrapping(payload.wrapS),
-          wrapW: determineMaterialWrapping(payload.wrapW),
+        state.materialGraphs[payload.materialName.value] = {
+          outputTextureWidth: payload.outputTextureWidth.value,
+          outputTextureHeight: payload.outputTextureHeight.value,
+          outputMaterialType: payload.outputMaterialType.value,
+          wrapS: determineMaterialWrapping(payload.wrapS.value),
+          wrapW: determineMaterialWrapping(payload.wrapW.value),
           textureKeys: {},
           compiledFragmentShader: "",
           materialGraph: {},
@@ -82,22 +79,23 @@ export const materialListPaneSlice = createSlice({
     },
     showRemoveMaterialAlert: (state, action) => {
       //Make the delete material modal visible/invisible
-      state.deleteMaterialModalVisible = true;
+      state.deleteMaterialAlertVisible = true;
     },
     hideRemoveMaterialAlert: (state, action) => {
       //Make the delete material modal visible/invisible
-      state.deleteMaterialModalVisible = false;
+      state.deleteMaterialAlertVisible = false;
     },
     removeMaterial: (state, action) => {
       //Make sure this isn't a protected Material
-      const arrayKeys = state.materialGraphs.keys();
-      if(arrayKeys.includes(action.payload) &&
-       action.payload !== 'Terrain Heightmap' &&  action.payload !== 'Terrain Material Map'){
-        const newActiveMaterial = arrayKeys[(arrayKeys.indexOf(action.payload) -  1) % (arrayKeys.length - 1)];
-        state.materialGraphs[state.activeMaterial] = null;
-        state.activeMaterial = newActiveMaterial;
-        state.deleteMaterialModalVisible = false;
+      const currentState = current(state);
+      const arrayKeys = Object.keys(currentState.materialGraphs);
+      if(arrayKeys.includes(action.payload) && action.payload !== 'Terrain Heightmap' &&  action.payload !== 'Terrain Material Map'){
+        const currentIndex = arrayKeys.indexOf(action.payload);
+        const {[action.payload]: value, ...materialGraphsWithoutThisMaterial } = currentState.materialGraphs;
+        state.materialGraphs = materialGraphsWithoutThisMaterial;
+        state.activeMaterial = arrayKeys[currentIndex + 1 >= arrayKeys.length ? currentIndex - 1 : currentIndex + 1];
       }
+      state.deleteMaterialAlertVisible = false;
     },
     viewMaterialGraph: (state, action) => {
       state.activeMaterial = action.payload;
@@ -111,11 +109,11 @@ export const materialListPaneSlice = createSlice({
   }
 });
 
-export const { createOrUpdateMaterial, showRemoveMaterialAlert, hidesRemoveMaterialAlert, removeMaterial,
+export const { createOrUpdateMaterial, showRemoveMaterialAlert, hideRemoveMaterialAlert, removeMaterial,
 viewMaterialGraph, updateMaterialNodes, updateMaterialComments } = materialListPaneSlice.actions;
 export const selectActiveMaterial = (state) => state.materialListPane.activeMaterial;
 export const selectMaterialList = (state) => state.materialListPane.materialGraphs;
-export const selectDeleteMaterialModalVisible = (state) => state.materialListPane.deleteMaterialModalVisible;
+export const selectDeleteMaterialAlertVisible = (state) => state.materialListPane.deleteMaterialAlertVisible;
 export const selectActiveNodes = function(state){
   const materialGraphs = state.materialListPane.materialGraphs;
   const activeMaterial = state.materialListPane.activeMaterial;

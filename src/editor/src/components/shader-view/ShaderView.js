@@ -4,6 +4,7 @@ import NodeGraphPane from './NodeGraphPane.js';
 import PreviewPane from './PreviewPane.js';
 import ResourcePane from './ResourcePane.js';
 import NewMaterialModal from './NewMaterialModal.js'
+import FileDeletionAlert from './FileDeletionAlert.js'
 import './ShaderView.css';
 import '../../../node_modules/react-mosaic-component/react-mosaic-component.css';
 import '../../../node_modules/normalize.css/normalize.css';
@@ -25,6 +26,7 @@ export default function ShaderView(){
     <div id="view-container">
       <div id="view-space">
         <NewMaterialModal></NewMaterialModal>
+        <FileDeletionAlert></FileDeletionAlert>
         <Mosaic
           id="view-pane-container"
           renderTile={(id, path) => (

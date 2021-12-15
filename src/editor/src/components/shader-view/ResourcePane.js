@@ -65,7 +65,7 @@ export default function ResourcePane(){
             <button className="bp3-button bp3-intent-primary" id="add-shader-button" onClick={(e)=>dispatch(create(true))} >
               <span className="bp3-icon bp3-icon-add" icon="add"></span>
             </button>
-            <button className={deleteButtonClasses} id="request-prompt-to-remove-shader-button">
+            <button className={deleteButtonClasses} id="request-prompt-to-remove-shader-button" onClick={(e)=>dispatch(showRemoveMaterialAlert(e.target.innerText))}>
               <span className="bp3-icon bp3-icon-remove" icon="remove"></span>
             </button>
           </div>
