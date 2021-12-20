@@ -1,6 +1,7 @@
 import React from 'react';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import { Tree, Classes } from "@blueprintjs/core";
+import './DirectoryPane.css'
 
 export default function DirectoryPane(){
   const sampleData = [
@@ -20,7 +21,7 @@ export default function DirectoryPane(){
         id: 2,
         hasCaret: true,
         icon: "folder-close",
-        label: "3D Modals"
+        label: "3D Models"
       },
     ];
 

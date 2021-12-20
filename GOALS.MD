@@ -1,2 +1,0 @@
-# Feature Goals For 0.0.1
-*
