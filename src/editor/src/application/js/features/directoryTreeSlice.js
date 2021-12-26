@@ -3,8 +3,36 @@ import { createSlice } from '@reduxjs/toolkit';
 export const directoryTreeSlice = createSlice({
   name: 'directoryTree',
   initialState: {
-    activePath: ['root'],
-    treeStructure: 'test'
+    activePath: ['Textures'],
+    treeStructure: {
+      {
+        id: 0,
+        hasCaret: true,
+        icon: "folder-open",
+        label: "Textures",
+        deletable: false,
+        files: {},
+        treeStructure: {}
+      },
+      {
+        id: 1,
+        hasCaret: true,
+        icon: "folder-close",
+        label: "3D Models",
+        deletable: false,
+        files: {},
+        treeStructure: {}
+      },
+      {
+        id: 2,
+        hasCaret: true,
+        icon: "folder-close",
+        label: "Sounds",
+        deletable: false,
+        files: {},
+        treeStructure: {}
+      },
+    }
   },
   reducers: {
     addFolder: (state, action) => {

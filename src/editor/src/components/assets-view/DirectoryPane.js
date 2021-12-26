@@ -1,36 +1,22 @@
 import React from 'react';
 import '@blueprintjs/core/lib/css/blueprint.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { addFolder, removeFolder, moveFolder, renameFolder, selectFolder, selectDirectoryTreeState } from '../../application/js/features/directoryTreeSlice.js';
 import { Tree, Classes } from "@blueprintjs/core";
 import './DirectoryPane.css'
 
 export default function DirectoryPane(){
-  const sampleData = [
-      {
-        id: 0,
-        hasCaret: true,
-        icon: "folder-close",
-        label: "Textures"
-      },
-      {
-        id: 1,
-        hasCaret: true,
-        icon: "folder-close",
-        label: "Brushes"
-      },
-      {
-        id: 2,
-        hasCaret: true,
-        icon: "folder-close",
-        label: "3D Models"
-      },
-    ];
+  const nodeEditor = React.useRef();
+  const treeState = useSelector(selectDirectoryTreeState);
+  const dispatch = useDispatch();
+  const defaultNodes={};
 
   return(
     <div id="directory-panel">
       <section id="directory-panel-flex-container">
         <div id="directories">
             <Tree
-              contents={sampleData}
+              contents={treeState}
               className={Classes.ELEVATION_0}
             />
         </div>
