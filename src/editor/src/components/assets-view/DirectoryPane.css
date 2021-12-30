@@ -1,3 +1,15 @@
+.bp3-tree-node{
+  list-style-type: none;
+}
+
 .bp3-tree-node-label{
   font-size: 0.75em;
+}
+
+.bp3-tree-node-label:hover{
+  cursor: pointer;
+}
+
+.selected-tree-folder{
+  background-color: rgba(92, 168, 160, 0.3);
 }

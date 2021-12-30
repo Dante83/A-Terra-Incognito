@@ -29,7 +29,6 @@ export function configureTrigFunctionsNode(config){
         const operand1Rank = op1Type.includes('float') ? 0 : (op1Type.includes('vec') ? 1 : (op1Type.includes('mat') ? 2 : invalidOperator));
         if(ipts.hasOwnProperty('operand2')){
           const op2Type = ipts.operand2[0].portName;
-          const operand2Rank = op2Type.includes('float') ? 0 : (op2Type.includes('vec') ? 1 : (op2Type.includes('mat') ? 2 : invalidOperator));
           let operand2Size = 0;
           if(op2Type !== 'float'){
             operand2Size = parseInt(op2Type.match(/\d+/)[0]);

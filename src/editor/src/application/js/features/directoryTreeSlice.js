@@ -1,78 +1,162 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
+
+function setChildNodesToClosed(subDirectory){
+  if(subDirectory.childNodes && !!subDirectory.childNodes.length){
+    for(let i = 0; i < subDirectory.childNodes.length; ++i){
+      const childNode = subDirectory.childNodes[i];
+      childNode.expanded = false;
+      setChildNodesToClosed(childNode);
+    }
+  }
+}
+
+function expandFolder(state, action){
+  //Upon clicking the carrot next to the folder, choose whether to expand or
+  //collapse it.
+  const payload = action.payload;
+  const expanded = payload.expanded;
+  const directory = JSON.parse(payload.directory);
+  if(expanded){
+    //Open this and all parents up to this add folder
+    let subDirectory = state.treeStructure[directory[0]];
+    subDirectory.expanded = true;
+    for(let i = 1; i < directory.length; ++i){
+      subDirectory = subDirectory.childNodes[directory[i]];
+      subDirectory.expanded = true;
+    }
+  }
+  else{
+    //Close this and all children below this
+    let subDirectory = state.treeStructure[directory[0]];;
+    for(let i = 0; i < directory.length - 1; ++i){
+      subDirectory = subDirectory.childNodes[directory[i]];
+    }
+    subDirectory.expanded = false;
+    setChildNodesToClosed(subDirectory);
+  }
+
+  return [state, action];
+}
+
+function getPathItem(directory, directoryTree){
+  let subdirectory = directoryTree[directory[0]];
+  for(let i = 1; i < directory.length; ++i){
+    subdirectory = subdirectory.childNodes[directory[i]];
+  }
+  return subdirectory;
+}
 
 export const directoryTreeSlice = createSlice({
   name: 'directoryTree',
+  uploadURL: 'http://localhost:5000/',
+  downloadURL: 'http://localhost:3000/example/example_project_1/assets',
   initialState: {
-    activePath: ['Textures'],
-    treeStructure: {
+    activePath: [0],
+    treeStructure: [
       {
         id: 0,
-        hasCaret: true,
-        icon: "folder-open",
         label: "Textures",
-        deletable: false,
-        files: {},
-        treeStructure: {}
+        expanded: false,
+        isSelected: true,
+        files: [],
+        childNodes: [
+          {
+            id: 3,
+            label: "3D Models",
+            expanded: false,
+            isSelected: false,
+            childNodes: [],
+            files: [],
+          },
+          {
+            id: 4,
+            label: "Sounds",
+            expanded: false,
+            isSelected: false,
+            childNodes: [],
+            files: [],
+          }
+        ]
       },
       {
         id: 1,
-        hasCaret: true,
-        icon: "folder-close",
         label: "3D Models",
-        deletable: false,
-        files: {},
-        treeStructure: {}
+        expanded: false,
+        isSelected: false,
+        files: [],
+        childNodes: [
+          {
+            id: 5,
+            label: "3D Models",
+            expanded: false,
+            isSelected: false,
+            files: [],
+            childNodes: [],
+          },
+          {
+            id: 6,
+            label: "Sounds",
+            expanded: false,
+            isSelected: false,
+            files: [],
+            childNodes: [],
+          }
+        ],
       },
       {
         id: 2,
-        hasCaret: true,
-        icon: "folder-close",
         label: "Sounds",
-        deletable: false,
-        files: {},
-        treeStructure: {}
-      },
-    }
+        expanded: false,
+        isSelected: false,
+        childNodes: [],
+        files: [],
+      }
+    ]
   },
   reducers: {
-    addFolder: (state, action) => {
-      //Fire a request to our API method to create a new folder inside our project directory
-      //Once complete, dispatch a new method to request the creation of this folder here.
-    },
-    addFolderComplete: (state, action) => {
+    addFileCallback: (state, action) => {
       //Once the API method above creates the folder in the project directory, show the new folder
       //as selectable in the tree structure
     },
-    removeFolder: (state, action) => {
-      //Fire a request to our API method to delete the folder inside our project directory
-      //Once complete, dispatch a new method to request the deletion of the folder here.
-    },
-    removeFolderComplete: (state, action) => {
+    removeFileCallback: (state, action) => {
       //Once the API method above deletes the folder in the project directory, delete the folder from
       //the tree view here.
     },
-    moveFolder: (state, action) => {
-      //Fire a request to our API to move the folder to the new directory location
-    },
-    moveFolderComplete: (state, action) => {
+    moveFileCallback: (state, action) => {
       //Once the folder has been moved notify the user that this has changed and update the tree
     },
-    renameFolder: (state, action) => {
-      //Fire a request to our API method to rename the folder in our project directory
-      //Once complete, dispatch a new method to request that this folder name be changed here.
+    addFolderCallback: (state, action) => {
+      //Once the API method above creates the folder in the project directory, show the new folder
+      //as selectable in the tree structure
     },
-    renameFolderCoplete: (state, action) => {
-      //Once the folder has been renamed, change the file name here.
+    removeFolderCallback: (state, action) => {
+      //Once the API method above deletes the folder in the project directory, delete the folder from
+      //the tree view here.
     },
-    selectFolder: (state, action) => {
+    moveFolderCallback: (state, action) => {
+      //Once the folder has been moved notify the user that this has changed and update the tree
+    },
+    openFolder: (state, action) => {
       //Upon clicking a folder, open it up and show all the files inside
       //also set this as the active path so that new files are uploaded to this
       //location upon being dropped into the drop-zone.
+      const currentState = current(state);
+      const currentlyActiveDirectory = getPathItem(currentState.activePath, state.treeStructure);
+      currentlyActiveDirectory.isSelected = false;
+      const directory = JSON.parse(action.payload);
+      const newActiveDirectory = getPathItem(directory, state.treeStructure);
+      newActiveDirectory.isSelected = true;
+      state.activePath = [...directory];
+      [state, action] = expandFolder(state, {payload: {expanded: true, directory: action.payload}});
+    },
+    setFolderExpanded: (state, action) => {
+      [state, action] = expandFolder(state, action);
     }
   }
 });
 
-export const { addFolder, addFolderComplete, removeFolder, removeFolderComplete, moveFolder, moveFolderComplete, renameFolder, renameFolderComplete, selectFolder } = directoryTreeSlice.actions;
+export const { addFileCallback, removeFileCallback, moveFileCallback, addFolderCallback,
+removeFolderCallback, moveFolderCallback, openFolder, setFolderExpanded } = directoryTreeSlice.actions;
 export const selectDirectoryTreeState = (state) => state.directoryTree.treeStructure;
 export const selectActiveDirectoryPath = (state) => state.directoryTree.activePath;
 export const directoryTreeReducer = directoryTreeSlice.reducer;

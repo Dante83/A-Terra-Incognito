@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectMaterialList, selectActiveMaterial, createOrUpdateMaterial } from '../../application/js/features/materialListPaneSlice.js';
+import { selectMaterialList, createOrUpdateMaterial } from '../../application/js/features/materialListPaneSlice.js';
 import { selectModalFormState, selectIsEditMaterialModalVisible, closeNewMaterialModal, displayErrors } from '../../application/js/features/newMaterialModalSlice.js';
-import { Dialog, Label, InputGroup, FormGroup, Button, Intent, Position, Toaster } from "@blueprintjs/core";
+import { Dialog, InputGroup, FormGroup, Button } from "@blueprintjs/core";
 import '../../../node_modules/normalize.css/normalize.css';
 import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
@@ -70,7 +70,7 @@ function submitFormAction(formValues, isUpdate, createOrUpdateMaterialReducer, d
     else if(materialName.length > 64){//Name must be under 64 characters in length
       state.materialName.errors = ['The material name must not be over 64 characters in length.'];
     }
-    else if(!(/^[ A-Za-z0-9_@.~/#&+-\s!?%^$*()-\[\]\\]*$/i).test(materialName)){
+    else if(!(/^[ A-Za-z0-9_@.~/#&+-\s!?%^$*()-[]\\]*$/i).test(materialName)){
       //Name must contain only alphanumeric characters
       state.materialName.errors = ['The material must only contain alphanumeric characters, spaces, and some special characters.'];
     }

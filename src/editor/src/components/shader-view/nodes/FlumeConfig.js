@@ -26,7 +26,6 @@ import {configureFlumeBooleanOperatorsNode} from '../../../application/js/editor
 import {configureChannelSplitterNode} from '../../../application/js/editor/nodes/operators/ChannelSplitter.js';
 import {configureClampOperatorNode} from '../../../application/js/editor/nodes/operators/Clamp.js';
 import {configureFlumeColorOperatorsNode} from '../../../application/js/editor/nodes/operators/Color.js';
-import {configureFlumeCoordinatesTransformationNode} from '../../../application/js/editor/nodes/operators/Coordinates.js';
 import {configureAddNormals} from '../../../application/js/editor/nodes/operators/AddNormals.js'
 import {configureMathNode} from '../../../application/js/editor/nodes/operators/Math.js';
 import {configureMatrixMathNode} from '../../../application/js/editor/nodes/operators/MatrixMath.js';
@@ -73,7 +72,6 @@ configureFlumeBooleanOperatorsNode(flumeConfig);
 configureChannelSplitterNode(flumeConfig);
 configureClampOperatorNode(flumeConfig);
 configureFlumeColorOperatorsNode(flumeConfig);
-//configureFlumeCoordinatesTransformationNode(flumeConfig);
 configureMathNode(flumeConfig);
 configureMatrixMathNode(flumeConfig);
 configureMixOperatorNode(flumeConfig);

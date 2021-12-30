@@ -1,5 +1,4 @@
 import { createSlice, current } from '@reduxjs/toolkit';
-import { closeNewMaterialModal } from './newMaterialModalSlice.js';
 import { RepeatWrapping, ClampToEdgeWrapping, MirroredRepeatWrapping} from 'three';
 
 function determineMaterialWrapping(wrapString){

@@ -1,0 +1,21 @@
+.file-or-folder-type{
+  border-radius: 25px;
+  padding: 8px;
+  width: 100px;
+  margin: 0px 4px 4px 4px;
+  float: left;
+  text-align: center;
+}
+
+.file-or-folder-type:hover{
+  background-color: rgba(92, 112, 128, 0.3);
+}
+
+.file-or-folder-icon:hover{
+  cursor: pointer;
+}
+
+.file-label{
+  font-weight: lighter;
+  font-size: 0.6em;
+}

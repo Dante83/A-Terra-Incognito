@@ -22,7 +22,7 @@ export default function ResourcePane(){
     const materialName = materialsList[i];
     let menuOptions = () => <Menu><MenuItem text="Open" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))} /></Menu>;
     if(materialName !== 'Terrain Heightmap' &&  materialName !== 'Terrain Material Map'){
-      let menuOptions = () => <Menu>
+      menuOptions = () => <Menu>
         <MenuItem text="Open" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))} />
         <MenuItem text="Edit Properties" onClick={(e)=>dispatch(update(e.target.innerText))} />
         <MenuItem text="Delete" onClick={(e)=>dispatch(showRemoveMaterialAlert(e.target.innerText))} />
@@ -30,8 +30,8 @@ export default function ResourcePane(){
     }
     if(materialName !== activeMaterialName){
       materialSelectionList.push(
-          <ContextMenu2 content={menuOptions()}>
-            <div key={materialName} className="bp3-button-group bp3-fill bp3-vertical">
+          <ContextMenu2 key={materialName} content={menuOptions()}>
+            <div className="bp3-button-group bp3-fill bp3-vertical">
               <span className="bp3-button" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))}>{materialName}</span>
             </div>
           </ContextMenu2>
@@ -39,8 +39,8 @@ export default function ResourcePane(){
     }
     else{
       materialSelectionList.push(
-          <ContextMenu2 content={menuOptions()}>
-            <div key={materialName} className="bp3-button-group bp3-fill bp3-vertical">
+          <ContextMenu2 key={materialName} content={menuOptions()}>
+            <div className="bp3-button-group bp3-fill bp3-vertical">
               <span className="bp3-button" id="selected-material-button" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))}>{materialName}</span>
             </div>
           </ContextMenu2>

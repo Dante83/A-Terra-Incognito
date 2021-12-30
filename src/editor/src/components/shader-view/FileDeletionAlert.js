@@ -1,12 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { hideRemoveMaterialAlert, removeMaterial, selectActiveMaterial, selectDeleteMaterialAlertVisible } from '../../application/js/features/materialListPaneSlice.js';
-import { Alert, Intent } from "@blueprintjs/core";
+import { Alert } from "@blueprintjs/core";
 import '../../../node_modules/normalize.css/normalize.css';
 import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
-
-const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
 
 export default function FileDeletionAlert(){
   const alertIsVisible = useSelector(selectDeleteMaterialAlertVisible);

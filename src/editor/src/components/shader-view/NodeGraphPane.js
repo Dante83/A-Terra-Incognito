@@ -15,7 +15,6 @@ export default function NodeGraphPane() {
   const dispatch = useDispatch();
   const nodes = useSelector(selectActiveNodes);
   const comments = useSelector(selectActiveComments);
-  const defaultNodes={};
 
   function recordCurrentNodeChanges(){
     if(nodeEditor && nodeEditor.current){
