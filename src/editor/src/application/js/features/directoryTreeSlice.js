@@ -48,63 +48,26 @@ function getPathItem(directory, directoryTree){
 
 export const directoryTreeSlice = createSlice({
   name: 'directoryTree',
-  uploadURL: 'http://localhost:5000/',
-  downloadURL: 'http://localhost:3000/example/example_project_1/assets',
   initialState: {
+    uploadURL: 'http://localhost:5000/',
+    downloadURL: 'http://localhost:3000/example/example_project_1/assets',
     activePath: [0],
     treeStructure: [
       {
-        id: 0,
         label: "Textures",
         expanded: false,
         isSelected: true,
         files: [],
-        childNodes: [
-          {
-            id: 3,
-            label: "3D Models",
-            expanded: false,
-            isSelected: false,
-            childNodes: [],
-            files: [],
-          },
-          {
-            id: 4,
-            label: "Sounds",
-            expanded: false,
-            isSelected: false,
-            childNodes: [],
-            files: [],
-          }
-        ]
+        childNodes: []
       },
       {
-        id: 1,
         label: "3D Models",
         expanded: false,
         isSelected: false,
         files: [],
-        childNodes: [
-          {
-            id: 5,
-            label: "3D Models",
-            expanded: false,
-            isSelected: false,
-            files: [],
-            childNodes: [],
-          },
-          {
-            id: 6,
-            label: "Sounds",
-            expanded: false,
-            isSelected: false,
-            files: [],
-            childNodes: [],
-          }
-        ],
+        childNodes: [],
       },
       {
-        id: 2,
         label: "Sounds",
         expanded: false,
         isSelected: false,
@@ -128,6 +91,20 @@ export const directoryTreeSlice = createSlice({
     addFolderCallback: (state, action) => {
       //Once the API method above creates the folder in the project directory, show the new folder
       //as selectable in the tree structure
+      const payload = action.payload;
+      const path = payload.path;
+      const newFolderName = payload.newFolderName;
+      let targetDirectory = state.treeStructure[path[0]];
+      for(let i = 1; i < path.length; ++i){
+        targetDirectory = targetDirectory.childNodes[path[i]];
+      }
+      targetDirectory.childNodes.push({
+        label: newFolderName,
+        expanded: false,
+        isSelected: false,
+        files: [],
+        childNodes: [],
+      });
     },
     removeFolderCallback: (state, action) => {
       //Once the API method above deletes the folder in the project directory, delete the folder from
@@ -157,6 +134,8 @@ export const directoryTreeSlice = createSlice({
 
 export const { addFileCallback, removeFileCallback, moveFileCallback, addFolderCallback,
 removeFolderCallback, moveFolderCallback, openFolder, setFolderExpanded } = directoryTreeSlice.actions;
+export const selectUploadURL = (state) => state.directoryTree.uploadURL;
+export const selectDownloadURL = (state) => state.directoryTree.downloadURL;
 export const selectDirectoryTreeState = (state) => state.directoryTree.treeStructure;
 export const selectActiveDirectoryPath = (state) => state.directoryTree.activePath;
 export const directoryTreeReducer = directoryTreeSlice.reducer;

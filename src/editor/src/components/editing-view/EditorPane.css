@@ -1,4 +1,4 @@
-#assets-browser-panel-container{
+#editor-canvas-holder{
   position: absolute;
   top: 0;
   bottom: 0;
@@ -6,6 +6,6 @@
   right: 0;
 }
 
-#assets-browser{
-  position: relative;
+#editor-canvas{
+  background-color: grey;
 }

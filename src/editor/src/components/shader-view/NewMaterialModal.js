@@ -70,7 +70,7 @@ function submitFormAction(formValues, isUpdate, createOrUpdateMaterialReducer, d
     else if(materialName.length > 64){//Name must be under 64 characters in length
       state.materialName.errors = ['The material name must not be over 64 characters in length.'];
     }
-    else if(!(/^[ A-Za-z0-9_@.~/#&+-\s!?%^$*()-[]\\]*$/i).test(materialName)){
+    else if(!(/^[A-Za-z0-9_@.~\/#&+-\s!?%^$*()-[]\\]*$/i).test(materialName)){
       //Name must contain only alphanumeric characters
       state.materialName.errors = ['The material must only contain alphanumeric characters, spaces, and some special characters.'];
     }
@@ -133,7 +133,16 @@ export default function NewMaterialModal(){
   const newMaterialModalVisible = useSelector(selectIsEditMaterialModalVisible);
   const currentModalData = useSelector(selectModalFormState);
   const dispatch = useDispatch();
-  const createOrUpdateText = currentModalData.isUpdate ? 'Update' : 'Create';
+  let createOrUpdateText;
+  let title;
+  if(currentModalData.isUpdate){
+    createOrUpdateText = 'update';
+    title = 'Edit Material';
+  }
+  else{
+    createOrUpdateText = 'create';
+    title = 'New Material';
+  }
   const formSubmit = function(e){
     e.preventDefault();
     const target = e.target;
@@ -151,7 +160,7 @@ export default function NewMaterialModal(){
 
   return(
     <Dialog
-      title="New Material"
+      title={title}
       usePortal={true}
       isOpen={newMaterialModalVisible}
       className={THEMES}

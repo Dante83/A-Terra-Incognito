@@ -7,7 +7,7 @@
 }
 
 .bp3-tree-node-label:hover{
-  cursor: pointer;
+  cursor: default;
 }
 
 .selected-tree-folder{

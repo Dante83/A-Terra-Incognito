@@ -11,10 +11,6 @@
   background-color: rgba(92, 112, 128, 0.3);
 }
 
-.file-or-folder-icon:hover{
-  cursor: pointer;
-}
-
 .file-label{
   font-weight: lighter;
   font-size: 0.6em;
