@@ -11,6 +11,16 @@
   background-color: rgba(92, 112, 128, 0.3);
 }
 
+.selected-file-or-folder-type{
+  border-radius: 25px;
+  padding: 8px;
+  width: 100px;
+  margin: 0px 4px 4px 4px;
+  float: left;
+  text-align: center;
+  background-color: rgba(92, 112, 128, 0.6);
+}
+
 .file-label{
   font-weight: lighter;
   font-size: 0.6em;

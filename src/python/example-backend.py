@@ -1,10 +1,12 @@
 from flask import Blueprint, Flask, request
+from flask_cors import CORS #comment this out on deployment - for local development only because this is on localhost:5000 while npm is on localhost:3000
 from pathlib import Path, PurePath
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 import shutil, os, os.path
 
 app = Flask(__name__)
+CORS(app)#comment this out on deployment - for local development only because this is on localhost:5000 while npm is on localhost:3000
 app.config['UPLOAD_FOLDER'] = '../editor/example/'
 
 #I am deciding that I don't want any uploads about 25MB
@@ -235,3 +237,5 @@ def delete_folder():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    cors = CORS(app)
+    app.config['CORS_HEADERS'] = 'application/json'

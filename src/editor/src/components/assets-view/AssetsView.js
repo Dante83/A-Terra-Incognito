@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Mosaic, MosaicWindow } from 'react-mosaic-component';
 import NewFolderModal from './NewFolderModal.js';
+import DeleteFoldersAndFilesAlert  from '../alerts/DeleteFoldersAndFilesAlert.js'
 import './AssetsView.css';
 import '../../../node_modules/react-mosaic-component/react-mosaic-component.css';
 import '../../../node_modules/normalize.css/normalize.css';
@@ -21,6 +22,7 @@ export default function AssetsView(){
   return (
     <div id="view-container">
       <div id="view-space">
+        <DeleteFoldersAndFilesAlert></DeleteFoldersAndFilesAlert>
         <NewFolderModal></NewFolderModal>
         <Mosaic
           id="view-pane-container"

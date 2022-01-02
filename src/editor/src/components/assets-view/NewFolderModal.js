@@ -13,28 +13,33 @@ const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
 
 async function makeCreateFolderRequest(dispatch, targetURL, targetDirectory, folderLabel, currentDirectory){
   //TODO: This is just an example URL, killing CORS is probably a bad idea
-  fetch(targetURL + '?directory=example_project_1%2fassets%2f' + encodeURIComponent(targetDirectory) + '&folder_name=' + encodeURIComponent(folderLabel),
-  {
-    mode: 'no-cors' // 'cors' by default
-  })
+  fetch(targetURL + '?directory=example_project_1%2fassets%2f' + encodeURIComponent(targetDirectory) + '&folder_name=' + encodeURIComponent(folderLabel))
   .then((response) => {
-    //Presume success because that is the best we can do with CORS
-    //if(response.success){
-    if(true){
-      dispatch(addFolderCallback({path: currentDirectory, newFolderName: folderLabel}));
+    const resolvedResponse = response.json().then(
+      (result) => {
+        if(result.success){
+          dispatch(addFolderCallback({path: currentDirectory, newFolderName: folderLabel}));
+          toaster.show({
+            message: 'Folder Created',
+            intent: 'success',
+            icon: 'tick-circle'
+          });
+        }
+        else{
+          toaster.show({
+            message: ("Error: " + result.msg),
+            intent: 'danger',
+            icon: 'error'
+          });
+        }
+      }
+    ).catch((error) => {
       toaster.show({
-        message: 'Folder Created',
-        intent: 'success',
-        icon: 'tick-circle'
-      });
-    }
-    else{
-      toaster.show({
-        message: ("Error: " + response.msg),
+        message: ("Error: " + error),
         intent: 'danger',
         icon: 'error'
       });
-    }
+    });
   })
   .catch((error) => {
     toaster.show({
@@ -149,7 +154,7 @@ export default function NewFolderModal(){
               intent={currentModalData.folderName.errors.length > 0 ? 'danger' : 'primary'}
               helperText={currentModalData.folderName.errors.join('<br/>')}
           >
-              <InputGroup id="folder-name-input" placeholder="Folder Name" />
+              <InputGroup autoFocus id="folder-name-input" placeholder="Folder Name" />
           </FormGroup>
 
           <div id="new-folder-button-group">

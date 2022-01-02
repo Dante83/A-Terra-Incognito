@@ -51,7 +51,10 @@ export const directoryTreeSlice = createSlice({
   initialState: {
     uploadURL: 'http://localhost:5000/',
     downloadURL: 'http://localhost:3000/example/example_project_1/assets',
+    deleteFoldersAndFilesAlertVisible: false,
     activePath: [0],
+    selectedFiles: [],
+    selectedFolders: [],
     treeStructure: [
       {
         label: "Textures",
@@ -78,15 +81,23 @@ export const directoryTreeSlice = createSlice({
   },
   reducers: {
     addFileCallback: (state, action) => {
-      //Once the API method above creates the folder in the project directory, show the new folder
+      //Once the API method above creates the file in the project directory, show the new folder
       //as selectable in the tree structure
     },
     removeFileCallback: (state, action) => {
-      //Once the API method above deletes the folder in the project directory, delete the folder from
+      //Once the API method above deletes the file in the project directory, delete the folder from
       //the tree view here.
+      const path = action.payload.path;
+      const fileName = action.payload.filename;
+      const currentState = current(state);
+      const filterableFiles = getPathItem(path, state.treeStructure).files;
+      const filteredFiles = filterableFiles.filter((item)=>{
+        return item.label !== fileName;
+      });
+      filterableFiles = filteredFiles;
     },
     moveFileCallback: (state, action) => {
-      //Once the folder has been moved notify the user that this has changed and update the tree
+      //Once the file has been moved notify the user that this has changed and update the tree
     },
     addFolderCallback: (state, action) => {
       //Once the API method above creates the folder in the project directory, show the new folder
@@ -109,6 +120,14 @@ export const directoryTreeSlice = createSlice({
     removeFolderCallback: (state, action) => {
       //Once the API method above deletes the folder in the project directory, delete the folder from
       //the tree view here.
+      const path = action.payload.path;
+      const folderName = action.payload.folderName;
+      const currentState = current(state);
+      const filterableFolders = getPathItem(path, state.treeStructure).childNodes;
+      const filteredFolders = filterableFolders.filter((folder)=>{
+        return folder.label !== folderName;
+      });
+      filterableFolders = filteredFolders;
     },
     moveFolderCallback: (state, action) => {
       //Once the folder has been moved notify the user that this has changed and update the tree
@@ -128,14 +147,104 @@ export const directoryTreeSlice = createSlice({
     },
     setFolderExpanded: (state, action) => {
       [state, action] = expandFolder(state, action);
+    },
+    clearSelectedItems: (state, action) => {
+      state.selectedFiles = [];
+      state.selectedFolders = [];
+    },
+    addFileToSelection: (state, action) => {
+      const fileName = action.payload;
+      const currentData = current(state);
+      const path = currentData.activePath;
+      let targetWriteDirectory = state.treeStructure[path[0]];
+      let targetReadDirectory = currentData.treeStructure[path[0]];
+      let currentPathString = targetReadDirectory.label;
+      for(let i = 1; i < path.length; ++i){
+        targetWriteDirectory = targetWriteDirectory.childNodes[path[i]];
+        targetReadDirectory = targetReadDirectory.childNodes[path[i]];
+        currentPathString = currentPathString + '/' + targetReadDirectory.label;
+      }
+
+      //Check this directory exists or not
+      let fileIndex = -1;
+      for(let i = 0; i < targetReadDirectory.files.length; ++i){
+        if(targetReadDirectory.files[i].label === fileName){
+          fileIndex = i;
+          break;
+        }
+      }
+      if(fileIndex !== -1){
+        state.selectedFiles.push({
+          path: [...path],
+          fileName: fileName,
+          stringDirectory: currentPathString + '/' + fileName
+        });
+      }
+      else{
+        console.warn(`The file ${currentPathString}/${fileName} does not exist and could not be added to the selection.`);
+      }
+    },
+    removeFileFromSelection: (state, action) => {
+      console.log('test');
+    },
+    addFolderToSelection: (state, action) => {
+      const currentState = current(state);
+      const directory = JSON.parse(action.payload);
+      const fullPath = getPathItem(directory, state.treeStructure);
+
+      if(fullPath){
+        //Get the path string
+        let currentDirectory = currentState.treeStructure[directory[0]];
+        let pathString = currentDirectory.label;
+        for(let i = 1; i < fullPath.length; ++i){
+          currentDirectory = currentDirectory.childNodes[directory[i]];
+          pathString = pathString + '/' + currentDirectory.label;
+        }
+        const folderName = currentDirectory.label;
+
+        //Check if this already exists or not
+        let alreadyInSelection = false;
+        for(let i = 0; i < currentState.selectedFolders.length; ++i){
+          const checkFolder = currentState.selectedFolders[i];
+          if(checkFolder.pathString === pathString){
+            alreadyInSelection = true;
+            break;
+          }
+        }
+        if(!alreadyInSelection){
+          state.selectedFolders.push({
+            path: [...directory],
+            folderName: folderName,
+            stringDirectory: pathString
+          })
+        }
+      }
+    },
+    removeFolderFromSelection: (state, action) => {
+      console.log('test');
+    },
+    setDeleteFoldersAndFilesAlertVisibility: (state, action) => {
+      const currentState = current(state);
+      const numSelectedFiles = currentState.selectedFiles.length;
+      const numSelectedFolders = currentState.selectedFolders.length;
+      if(action.payload && (numSelectedFiles > 0 || numSelectedFolders > 0)){
+        state.deleteFoldersAndFilesAlertVisible = true;
+      }
+      else{
+        state.deleteFoldersAndFilesAlertVisible = false;
+      }
     }
   }
 });
 
 export const { addFileCallback, removeFileCallback, moveFileCallback, addFolderCallback,
-removeFolderCallback, moveFolderCallback, openFolder, setFolderExpanded } = directoryTreeSlice.actions;
+removeFolderCallback, moveFolderCallback, openFolder, setFolderExpanded, setDeleteFoldersAndFilesAlertVisibility,
+clearSelectedItems, addFolderToSelection, removeFolderFromSelection, addFileToSelection, removeFileFromSelection } = directoryTreeSlice.actions;
 export const selectUploadURL = (state) => state.directoryTree.uploadURL;
 export const selectDownloadURL = (state) => state.directoryTree.downloadURL;
 export const selectDirectoryTreeState = (state) => state.directoryTree.treeStructure;
 export const selectActiveDirectoryPath = (state) => state.directoryTree.activePath;
+export const selectDeleteFoldersAndFilesAlertVisible = (state) => state.directoryTree.deleteFoldersAndFilesAlertVisible;
+export const selectSelectedFiles = (state) => state.directoryTree.selectedFiles;
+export const selectSelectedFolders = (state) => state.directoryTree.selectedFolders;
 export const directoryTreeReducer = directoryTreeSlice.reducer;

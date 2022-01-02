@@ -69,7 +69,7 @@ export default function DirectoryPane(){
         <span data={stringifiedDirectory} onClick={(e)=>dispatch(setFolderExpanded({expanded: true, directory: e.target.attributes.data.value}))}
           className="bp3-tree-node-caret bp3-tree-node-caret-closed bp3-icon-standard"></span>
           <span className={folderIconClasses}></span>
-          <span data={stringifiedDirectory} onClick={(e)=>dispatch(openFolder(e.target.attributes.data.value))}
+          <span data={stringifiedDirectory} onDoubleClick={(e)=>dispatch(openFolder(e.target.attributes.data.value))}
           className="bp3-tree-node-label">{folder.label}</span>
         </div>
       </li>);

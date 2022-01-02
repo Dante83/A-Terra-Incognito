@@ -70,7 +70,7 @@ function submitFormAction(formValues, isUpdate, createOrUpdateMaterialReducer, d
     else if(materialName.length > 64){//Name must be under 64 characters in length
       state.materialName.errors = ['The material name must not be over 64 characters in length.'];
     }
-    else if(!(/^[A-Za-z0-9_@.~\/#&+-\s!?%^$*()-[]\\]*$/i).test(materialName)){
+    else if(!(/^[A-Za-z0-9_@.~\/#&+\-\s!?%^$*()-\[\]\\]*$/i).test(materialName)){
       //Name must contain only alphanumeric characters
       state.materialName.errors = ['The material must only contain alphanumeric characters, spaces, and some special characters.'];
     }
@@ -173,7 +173,7 @@ export default function NewMaterialModal(){
               intent={currentModalData.materialName.errors.length > 0 ? 'danger' : 'primary'}
               helperText={currentModalData.materialName.errors.join('<br/>')}
           >
-              <InputGroup id="material-name-input" placeholder="Material Name" />
+              <InputGroup autoFocus id="material-name-input" placeholder="Material Name" />
           </FormGroup>
 
           <FormGroup

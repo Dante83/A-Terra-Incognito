@@ -6,7 +6,9 @@ import '../../../node_modules/normalize.css/normalize.css';
 import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 
-export default function FileDeletionAlert(){
+const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
+
+export default function DeleteMaterialAlert(){
   const alertIsVisible = useSelector(selectDeleteMaterialAlertVisible);
   const activeMaterial = useSelector(selectActiveMaterial);
   const dispatch = useDispatch();
@@ -18,6 +20,7 @@ export default function FileDeletionAlert(){
       cancelButtonText="Cancel"
       canOutsideClickCancel={true}
       canEscapeKeyCancel={true}
+      className={THEMES}
       onConfirm={()=>dispatch(removeMaterial(activeMaterial))}
       onCancel={()=>dispatch(hideRemoveMaterialAlert())}>
         Do you wish to remove the material, <b>{activeMaterial}</b>? <br/>
