@@ -1,3 +1,4 @@
+import produce from "immer";
 import { createSlice, current } from '@reduxjs/toolkit';
 
 function setChildNodesToClosed(subDirectory){
@@ -120,14 +121,13 @@ export const directoryTreeSlice = createSlice({
     removeFolderCallback: (state, action) => {
       //Once the API method above deletes the folder in the project directory, delete the folder from
       //the tree view here.
-      const path = action.payload.path;
+      const path = action.payload.path.slice(0,-1);
       const folderName = action.payload.folderName;
-      const currentState = current(state);
-      const filterableFolders = getPathItem(path, state.treeStructure).childNodes;
-      const filteredFolders = filterableFolders.filter((folder)=>{
-        return folder.label !== folderName;
+      let filterableFolders = getPathItem(path, state.treeStructure);
+      let readDirectory = current(filterableFolders);
+      produce(state, (draftState) => {
+        filterableFolders.childNodes = filterableFolders.childNodes.filter((x) => x.label !== folderName)
       });
-      filterableFolders = filteredFolders;
     },
     moveFolderCallback: (state, action) => {
       //Once the folder has been moved notify the user that this has changed and update the tree
@@ -196,7 +196,7 @@ export const directoryTreeSlice = createSlice({
         //Get the path string
         let currentDirectory = currentState.treeStructure[directory[0]];
         let pathString = currentDirectory.label;
-        for(let i = 1; i < fullPath.length; ++i){
+        for(let i = 1; i < directory.length; ++i){
           currentDirectory = currentDirectory.childNodes[directory[i]];
           pathString = pathString + '/' + currentDirectory.label;
         }

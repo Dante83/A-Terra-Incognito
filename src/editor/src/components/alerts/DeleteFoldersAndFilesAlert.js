@@ -11,7 +11,7 @@ import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
 
 function deleteFile(targetURL, filePath, fileName, filePathStringPlusName, dispatch){
-  fetch(targetURL + 'files/delete?deletion_path=' + encodeURIComponent(filePathStringPlusName))
+  fetch(targetURL + 'files/delete?deletion_path=example_project_1%2fassets%2f' + encodeURIComponent(filePathStringPlusName))
   .then((response) => {
     const resolvedResponse = response.json().then(
       (result) => {
@@ -49,7 +49,7 @@ function deleteFile(targetURL, filePath, fileName, filePathStringPlusName, dispa
 }
 
 function deleteFolder(targetURL, folderPath, folderName, folderPathStringPlusName, dispatch){
-  fetch(targetURL + 'folders/delete?deletion_path=' + encodeURIComponent(folderPathStringPlusName))
+  fetch(targetURL + 'folders/delete?deletion_path=example_project_1%2fassets%2f' + encodeURIComponent(folderPathStringPlusName))
   .then((response) => {
     const resolvedResponse = response.json().then(
       (result) => {
@@ -89,12 +89,12 @@ function deleteFolder(targetURL, folderPath, folderName, folderPathStringPlusNam
 async function deleteFilesAndFolders(dispatch, selectedFolders, selectedFiles, uploadURLString, activeDirectoryPath){
   //TODO: This is just an example URL, killing CORS is probably a bad idea
   //Filter our results so that we only have unique values
-  const folders = [...(new Set(selectedFiles.map(x=>JSON.stringify(x))))].map(x=>JSON.parse(x));
-  const files = [...(new Set(selectedFolders.map(x=>JSON.stringify(x))))].map(x=>JSON.parse(x));
+  const folders = [...(new Set(selectedFolders.map(x=>JSON.stringify(x))))].map(x=>JSON.parse(x));
+  const files = [...(new Set(selectedFiles.map(x=>JSON.stringify(x))))].map(x=>JSON.parse(x));
   for(let i = 0; i < folders.length; ++i){
     const folder = folders[i];
     const folderPath = folder.path;
-    const folderName = folder.name;
+    const folderName = folder.folderName;
     const folderPathStringPlusName = folder.stringDirectory;
     deleteFolder(uploadURLString, folderPath, folderName, folderPathStringPlusName, dispatch);
   }
