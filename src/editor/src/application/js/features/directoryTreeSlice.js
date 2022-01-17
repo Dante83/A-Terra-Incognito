@@ -53,6 +53,8 @@ export const directoryTreeSlice = createSlice({
     uploadURL: 'http://localhost:5000/',
     downloadURL: 'http://localhost:3000/example/example_project_1/assets',
     deleteFoldersAndFilesAlertVisible: false,
+    replaceExistingFilesAlertVisible: false,
+    skipReplaceExistingFilesAlert: false,
     activePath: [0],
     selectedFiles: [],
     selectedFolders: [],
@@ -84,6 +86,36 @@ export const directoryTreeSlice = createSlice({
     addFileCallback: (state, action) => {
       //Once the API method above creates the file in the project directory, show the new folder
       //as selectable in the tree structure
+      const payload = action.payload;
+      const path = payload.path;
+      const newFileName = payload.newFileName;
+      const newFileType = payload.newFileType;
+      const lastModifiedDate = payload.lastModifiedDate;
+      const isUpdate = payload.isUpdate;
+      let targetDirectory = state.treeStructure[path[0]];
+      for(let i = 1; i < path.length; ++i){
+        targetDirectory = targetDirectory.childNodes[path[i]];
+      }
+      if(isUpdate){
+        const currentFiles = current(targetDirectory.files);
+        for(let i = 0; i < currentFiles.length; ++i){
+          const currentFile = currentFiles[i];
+          if(currentFile.label === newFileName){
+            targetDirectory.files[i] = {
+              label: newFileName,
+              type: newFileType,
+              lastModifiedDate: lastModifiedDate,
+            };
+          }
+        }
+      }
+      else{
+        targetDirectory.files.push({
+          label: newFileName,
+          type: newFileType,
+          lastModifiedDate: lastModifiedDate,
+        });
+      }
     },
     removeFileCallback: (state, action) => {
       //Once the API method above deletes the file in the project directory, delete the folder from
@@ -244,6 +276,16 @@ export const selectUploadURL = (state) => state.directoryTree.uploadURL;
 export const selectDownloadURL = (state) => state.directoryTree.downloadURL;
 export const selectDirectoryTreeState = (state) => state.directoryTree.treeStructure;
 export const selectActiveDirectoryPath = (state) => state.directoryTree.activePath;
+export const selectActiveDirectoryPathString = (state) => {
+  const activePath = [...state.directoryTree.activePath];
+  let treeStructure = state.directoryTree.treeStructure[activePath[0]];
+  let activePathString = treeStructure.label;
+  for(let i = 1; i < activePath.length; ++i){
+    treeStructure = treeStructure.childNodes[activePath[i]];
+    activePathString += `/${treeStructure.label}`;
+  }
+  return activePathString;
+}
 export const selectDeleteFoldersAndFilesAlertVisible = (state) => state.directoryTree.deleteFoldersAndFilesAlertVisible;
 export const selectSelectedFiles = (state) => state.directoryTree.selectedFiles;
 export const selectSelectedFolders = (state) => state.directoryTree.selectedFolders;

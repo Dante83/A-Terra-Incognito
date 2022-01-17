@@ -14,9 +14,7 @@ import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
 
 const ELEMENT_MAP: { [viewId: string]: JSX.Element } = {
-  'node-graph-pane': <div>
-    <NodeGraphPane/>
-  </div>,
+  'node-graph-pane': <NodeGraphPane/>,
   'preview-pane': <PreviewPane/>,
   'resource-pane': <ResourcePane/>,
 };

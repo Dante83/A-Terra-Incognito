@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFolderCallback, removeFileCallback, clearSelectedItems, setDeleteFoldersAndFilesAlertVisibility,
- selectUploadURL, selectSelectedFiles, selectSelectedFolders, selectActiveDirectoryPath, selectDeleteFoldersAndFilesAlertVisible } from '../../application/js/features/directoryTreeSlice.js';
+ selectUploadURL, selectSelectedFiles, selectSelectedFolders, selectDeleteFoldersAndFilesAlertVisible } from '../../application/js/features/directoryTreeSlice.js';
 import { Alert } from "@blueprintjs/core";
 import { toaster } from '../alerts/Toaster.js';
 import '../../../node_modules/normalize.css/normalize.css';
@@ -86,7 +86,7 @@ function deleteFolder(targetURL, folderPath, folderName, folderPathStringPlusNam
   });
 }
 
-async function deleteFilesAndFolders(dispatch, selectedFolders, selectedFiles, uploadURLString, activeDirectoryPath){
+async function deleteFilesAndFolders(dispatch, selectedFolders, selectedFiles, uploadURLString){
   //TODO: This is just an example URL, killing CORS is probably a bad idea
   //Filter our results so that we only have unique values
   const folders = [...(new Set(selectedFolders.map(x=>JSON.stringify(x))))].map(x=>JSON.parse(x));
@@ -115,7 +115,6 @@ export default function DeleteFoldersAndFilesAlert(){
   const alertIsVisible = useSelector(selectDeleteFoldersAndFilesAlertVisible);
   const selectedFolders = useSelector(selectSelectedFolders);
   const selectedFiles = useSelector(selectSelectedFiles);
-  const activeDirectoryPath = useSelector(selectActiveDirectoryPath);
   const uploadURLString = useSelector(selectUploadURL);
   const dispatch = useDispatch();
 
@@ -127,7 +126,7 @@ export default function DeleteFoldersAndFilesAlert(){
       canOutsideClickCancel={true}
       canEscapeKeyCancel={true}
       className={THEMES}
-      onConfirm={()=>deleteFilesAndFolders(dispatch, selectedFolders, selectedFiles, uploadURLString, activeDirectoryPath)}
+      onConfirm={()=>deleteFilesAndFolders(dispatch, selectedFolders, selectedFiles, uploadURLString)}
       onCancel={()=>dispatch(setDeleteFoldersAndFilesAlertVisibility(false))}>
         Are you sure wish to delete all selected files/folders?<br/>
         <b>This cannot be undone.</b>

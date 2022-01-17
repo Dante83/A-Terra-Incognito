@@ -64,12 +64,23 @@ export default function DirectoryPane(){
       folderIconClasses = folderIconClasses.join(' ');
       nodeContentClasses = nodeContentClasses.join(' ');
 
+      function dummyFunction(e){
+        e.preventDefault();
+        console.log(e);
+      }
+
       return(<li key={key} className={listItemClasses}>
         <div className={nodeContentClasses}>
         <span data={stringifiedDirectory} onClick={(e)=>dispatch(setFolderExpanded({expanded: true, directory: e.target.attributes.data.value}))}
           className="bp3-tree-node-caret bp3-tree-node-caret-closed bp3-icon-standard"></span>
           <span className={folderIconClasses}></span>
-          <span data={stringifiedDirectory} onDoubleClick={(e)=>dispatch(openFolder(e.target.attributes.data.value))}
+          <span
+          data={stringifiedDirectory}
+          onDoubleClick={(e)=>dispatch(openFolder(e.target.attributes.data.value))}
+          onDrop={(e)=>dummyFunction(e)}
+          onDragOver={(e)=>e.preventDefault()}
+          onDragEnter={(e)=>e.preventDefault()}
+          onDragExit={(e)=>e.preventDefault()}
           className="bp3-tree-node-label">{folder.label}</span>
         </div>
       </li>);

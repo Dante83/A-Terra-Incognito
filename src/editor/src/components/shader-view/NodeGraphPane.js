@@ -36,8 +36,8 @@ export default function NodeGraphPane() {
         key={activeMaterial}
         nodeTypes={flumeConfig.nodeTypes}
         portTypes={flumeConfig.portTypes}
-        nodes={nodes}
         comments={comments}
+        nodes={nodes}
         onChange={()=>recordCurrentNodeChanges()}
         onCommentsChange={()=>recordCurrentCommentChanges()}
         ref={nodeEditor}

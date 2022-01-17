@@ -5,11 +5,12 @@ import { openFolder, clearSelectedItems, addFolderToSelection, removeFileFromSel
 setDeleteFoldersAndFilesAlertVisibility, selectSelectedFolders } from '../../application/js/features/directoryTreeSlice.js';
 import { ContextMenu, Menu, MenuItem, Icon } from "@blueprintjs/core";
 import './FileOrFolderType.css';
+import './FileType.css';
 
-export default function FolderType(props){
+export default function FileType(props){
   const dispatch = useDispatch();
-  const selectedFolders = useSelector(selectSelectedFolders).map(x=>JSON.stringify(x.path));
-  const key = 'folder-' + props.stringifiedDirectory;
+  const selectedFiles = useSelector(selectSelectedFolders).map(x=>JSON.stringify(x.path));
+  const key = 'file-' + props.stringifiedDirectory + props.label;
 
   function deleteFolderClicked(stringifiedDirectory){
     dispatch(clearSelectedItems());
@@ -17,7 +18,7 @@ export default function FolderType(props){
     dispatch(setDeleteFoldersAndFilesAlertVisibility(true));
   }
 
-  function addOrRemoveFolderFromSelection(stringifiedDirectory, shiftKeyIsDown, ctrlKeyIsDown){
+  function addOrRemoveFileFromSelection(stringifiedDirectory, shiftKeyIsDown, ctrlKeyIsDown){
     if(!shiftKeyIsDown && !ctrlKeyIsDown){
       dispatch(clearSelectedItems());
       dispatch(addFolderToSelection(stringifiedDirectory));
@@ -30,7 +31,7 @@ export default function FolderType(props){
     }
   }
 
-  function renderFolderContextMenu(e){
+  function renderFileContextMenu(e){
     e.preventDefault();
     e.stopPropagation();
     const stringifiedDirectory = e.currentTarget.attributes.data.value;
@@ -40,31 +41,53 @@ export default function FolderType(props){
         Menu,
         {}, // empty props
         React.createElement(MenuItem, { onClick: ()=>{console.log('rename')}, text: "Rename" }),
-        React.createElement(MenuItem, { onClick: ()=>{deleteFolderClicked(stringifiedDirectory, dispatch)}, text: "Delete" }),
-        React.createElement(MenuItem, { onClick: ()=>{dispatch(openFolder(stringifiedDirectory))}, text: "Open" })
+        React.createElement(MenuItem, { onClick: ()=>{deleteFolderClicked(stringifiedDirectory.stringifiedDirectory, dispatch)}, text: "Delete" }),
+        React.createElement(MenuItem, { onClick: ()=>{dispatch(previewFile(stringifiedDirectory.stringifiedDirectory, stringifiedDirectory.fileType))}, text: "Preview" })
     );
 
     // mouse position is available on event
     ContextMenu.show(menu, { left: e.clientX, top: e.clientY }, () => {}, true);
   }
 
+  function previewFile(e){
+    console.log(e.currentTarget.attributes);
+  }
+
   const classValues = "file-or-folder-type";
-  if(props.stringifiedDirectory in  selectedFolders){
+  if(props.stringifiedDirectory in selectedFiles){
     classValues = "selected-file-or-folder-type"
   }
 
+  let iconType = 'document';
+  if(props.type.startsWith('image')){
+    iconType = 'media';
+  }
+  else if(props.type.startsWith('audio')){
+    iconType = 'music';
+  }
+  else if(props.type.startsWith('video')){
+    iconType = 'video';
+  }
+  else if(props.label.endsWith('.obj') || props.label.endsWith('.glb') || props.label.endsWith('.gltf') ||
+  props.label.endsWith('.fbx') || props.label.endsWith('.dae') || props.label.endsWith('.ply') || props.label.endsWith('.x3d')){
+    iconType = 'cube';
+  }
+
+  const data = {
+    fileDirectory: props.stringifiedDirectory,
+    fileLabel: props.label,
+    fileType: props.type
+  }
   return(
     <div key={key}
-    data={props.stringifiedDirectory}
-    onClick={(e)=>addOrRemoveFolderFromSelection(e.currentTarget.attributes.data.value, e.shiftKey, e.ctrlKey || e.metaKey)}
-    onDoubleClick={(e)=>dispatch(openFolder(e.currentTarget.attributes.data.value))}
-    onContextMenu={(e)=>renderFolderContextMenu(e)}
-    onDrop={(e)=>{e.preventDefault(); console.log(e);}}
-    onDragEnter={(e)=>e.preventDefault()}
-    onDragExit={(e)=>e.preventDefault()}
+    data={data}
+    fileType={props.type}
+    onClick={(e)=>addOrRemoveFileFromSelection(e.currentTarget.attributes.data.value, e.shiftKey, e.ctrlKey || e.metaKey)}
+    onDoubleClick={(e)=>dispatch(previewFile(e))}
+    onContextMenu={(e)=>renderFileContextMenu(e)}
     className={classValues}>
       <div className="file-or-folder-icon">
-        <Icon icon="folder-close" size={80} intent="none" />
+        <Icon icon={iconType} size={80} intent="none" />
       </div>
       <div className="file-label">{props.label}</div>
     </div>

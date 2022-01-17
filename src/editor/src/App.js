@@ -31,7 +31,11 @@ export default function App(){
   FocusStyleManager.onlyShowFocusOnTabs();
 
   return(
-    <div className="bp3-dark">
+    <div className="bp3-dark"
+    onDrop={(e)=>{e.preventDefault(); console.log(e);}}
+    onDragOver={(e)=>e.preventDefault()}
+    onDragEnter={(e)=>e.preventDefault()}
+    onDragExit={(e)=>e.preventDefault()}>
       <Toolstrip onActiveViewChange={(e)=>dispatch(changeWorkbenchView(e))} />
       <div>
         {getActiveViewJSX(activeView)}
