@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+
+    <meta charset="UTF-8">
+    <title>Forested Hills</title>
+
+    <!--Meta-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,maximum-scale=1">
+
+    <!-- Built for A-Frame -->
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-fps-counter-component/dist/aframe-fps-counter-component.min.js"></script>
+    <script src="https://rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>
+    <!--This commented out code is the unfurled stack which I use for debugging-->
+
+    <!-- Sky Interpolator -->
+    <!-- <script src="../src/cpp/interpolation-engine/interpolation-engine.js"></script> -->
+
+    <!-- Namespace -->
+    <script src="../../src/terrain/js/a-world.js"></script>
+
+    <!-- Components -->
+    <script src="../../src/terrain/js/components/a-terrain-wrapper.js"></script>
+    <script src="../../src/terrain/js/components/TerrainDirector.js"></script>
+    <script src="../../src/terrain/js/components/TerrainTile.js"></script>
+
+    <!-- Materials -->
+    <!-- <script src="../../src/terrain/js/materials/..."></script> -->
+
+    <!-- Primitives -->
+    <script src="../../src/terrain/js/primitives/a-terrain-primitive.js"></script>
+
+    <!-- Renderers -->
+    <!-- <script src="../../src/terrain/js/renderers/a-terrain-primative.js"></script> -->
+
+    <!-- The below are used for development purposes, it is advised that you use the files in the dist folder -->
+    <!-- Three.js extensions -->
+
+    <!-- Post Processing -->
+
+  <!--Scene Scripts-->
+  </head>
+  <body>
+    <a-scene physics light="defaultLightsEnabled: false" shadow="type: pcfsoft">
+      <!-- <a-entity fps-counter></a-entity> -->
+
+      <a-entity id="rig" movement-controls position="0 2.0 0">
+        <a-entity camera look-controls wasd-controls="acceleration: 100"></a-entity>
+      </a-entity>
+
+      <a-world></a-world>
+    </a-scene>
+  </body>
+</html>

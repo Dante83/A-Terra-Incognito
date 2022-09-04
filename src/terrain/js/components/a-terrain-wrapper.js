@@ -1,23 +1,19 @@
-AFRAME.registerComponent('terrainwrapper', {
-  defaultValues: ATerrain.DefaultData,
+AFRAME.registerComponent('world_wrapper', {
+  defaultValues: AWorld.DefaultData,
   terrainDirector: null,
   initialized: false,
   schema: {
-    'draw_distance': {type: 'number', default: 256.0},
-    'draw_terrain_distance': {type: 'number', default: 8192.0},
-    'sound_distance': {type: 'number', default: 256.0},
-    'tau_value': {type: 'number', default: 1.0}
+    'draw_distance': {type: 'number', default: 5000.0},
+    'draw_terrain_distance': {type: 'number', default: 5000.0}
   },
   init: function(){
-    const renderer = this.el.sceneEl.renderer;
-    const scene = this.el.sceneEl.object3D;
-    const camera = this.el.sceneEl.camera.el.object3D;
-    const data = this.data;
+    const sceneEl = this.el.sceneEl;
+    const scene = sceneEl.object3D;
+    const renderer = sceneEl.renderer;
+    const camera = sceneEl.camera;
+    const data = this.el.data;
 
-    //Update the position of the objects
-    scene.updateMatrixWorld();
-
-    this.terrainDirector = new Terrain.TerrainDirector(this.el.getAttribute('web-worker-base-uri'), data, renderer, scene, camera);
+    this.terrainDirector = new AWorld.TerrainDirector(data, renderer, scene, camera);
   },
   tick: function(time, timeDelta){
     /*Do Nothing*/

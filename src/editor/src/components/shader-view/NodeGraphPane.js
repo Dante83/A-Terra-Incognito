@@ -11,23 +11,17 @@ import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 
 export default function NodeGraphPane() {
   const nodeEditor = React.useRef();
-  const activeMaterial = useSelector(selectActiveMaterial);
+  const activeMaterial = useSelector(selectActiveMaterial).toLowerCase() + '-node-graph-stage';
   const dispatch = useDispatch();
   const nodes = useSelector(selectActiveNodes);
   const comments = useSelector(selectActiveComments);
 
-  function recordCurrentNodeChanges(){
-    if(nodeEditor && nodeEditor.current){
-      const currentNodes = nodeEditor.current.getNodes();
-      dispatch(updateMaterialNodes(currentNodes));
-    }
+  function recordCurrentNodeChanges(currentNodes){
+    dispatch(updateMaterialNodes(currentNodes));
   }
 
-  function recordCurrentCommentChanges(){
-    if(nodeEditor && nodeEditor.current){
-      const currentComments = nodeEditor.current.getComments();
-      dispatch(updateMaterialComments(currentComments));
-    }
+  function recordCurrentCommentChanges(currentComments){
+    dispatch(updateMaterialComments(currentComments));
   }
 
   return(
@@ -36,11 +30,10 @@ export default function NodeGraphPane() {
         key={activeMaterial}
         nodeTypes={flumeConfig.nodeTypes}
         portTypes={flumeConfig.portTypes}
+        onChange={recordCurrentNodeChanges}
+        onCommentsChange={recordCurrentCommentChanges}
         comments={comments}
         nodes={nodes}
-        onChange={()=>recordCurrentNodeChanges()}
-        onCommentsChange={()=>recordCurrentCommentChanges()}
-        ref={nodeEditor}
       />
     </div>
   );

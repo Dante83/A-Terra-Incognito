@@ -1,4 +1,4 @@
-ALand = {
+AWorld = {
   DefaultData: {},
   assetPaths: {},
   chunkedLODs: null,
@@ -6,7 +6,7 @@ ALand = {
     images: {},
     gltfs: {},
     sounds: {}
-  }
+  },
   Materials: {
     Land: {},
   }
