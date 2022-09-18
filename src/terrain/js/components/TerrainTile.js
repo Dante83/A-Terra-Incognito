@@ -26,19 +26,20 @@ AWorld.TerrainTile = function(size, numTiles, top, right, bottom, left){
         const ySign = (((tri + 9) % 8) < 4) * 2 - 1;
         const segment = tri % 2;
         const downgradeTriangle = (topTriSkip && segmentIndex === 0) || (rightTriSkip && segmentIndex === 1) || (bottomTriSkip && segmentIndex === 2) || (leftTriSkip && segmentIndex === 3);
-        const startIndex = (downgradeTriangle && segment) * 2;
-        const endIndex = 3 - (downgradeTriangle && !segment);
-        for(let v = startIndex; v < endIndex; ++v){
+        const endIndex = (downgradeTriangle && segment) * 2 - 1;
+        const startIndex = 2 - (downgradeTriangle && !segment);
+        for(let v = startIndex; v > endIndex; --v){
           const triV = v + segment * 3;
-          vertexCoordinates[vindex + 2 * flipXY] = scaler * (2 * (flipXY ? y : x) + (flipXY ? ySign : xSign) * ((triV === 0) || (triV === 5)));
+          vertexCoordinates[vindex + 2 * flipXY] = scaler * (1.0 + 2 * (flipXY ? y : x) + (flipXY ? ySign : xSign) * ((triV === 0) || (triV === 5)));
           //vertexCoordinates[vindex] = 0.0 - Y is zero
-          vertexCoordinates[vindex + 2 * (!flipXY)] = scaler * (2 * (flipXY ? x : y) + (flipXY ? xSign : ySign) * ((triV + (!segment)) % 2));
+          vertexCoordinates[vindex + 2 * (!flipXY)] = scaler * (1.0 + 2 * (flipXY ? x : y) + (flipXY ? xSign : ySign) * ((triV + (!segment)) % 2));
           vindex += 3;
         }
       }
     }
   }
 
+  console.log(totalNumberOfTriangles);
   this.vertexCoordinates = vertexCoordinates;
   this.geometry = new THREE.BufferGeometry();
   this.geometry.setAttribute( 'position', new THREE.BufferAttribute( this.vertexCoordinates, 3 ) );

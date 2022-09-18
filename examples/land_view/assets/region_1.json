@@ -1,0 +1,12 @@
+{
+  width: 1000,
+  height: 1000,
+  baseURL: './first_region'
+  adjacentRegionsURLs: [],
+  heightMapURLs: {},
+  textureURLs: {},
+  soundURLs: {},
+  GLTFURLs: {},
+  AssetCollections: {},
+  AssetCollectionMapURLs: {},
+}
