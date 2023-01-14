@@ -9,13 +9,13 @@ import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 import './NewFolderModal.css';
 
-const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
+const THEMES = ['bp3-dark'];
 
 async function makeCreateFolderRequest(dispatch, targetURL, targetDirectory, folderLabel, currentDirectory){
   //TODO: This is just an example URL, killing CORS is probably a bad idea
   fetch(targetURL + '?directory=example_project_1%2fassets%2f' + encodeURIComponent(targetDirectory) + '&folder_name=' + encodeURIComponent(folderLabel))
   .then((response) => {
-    const resolvedResponse = response.json().then(
+    response.json().then(
       (result) => {
         if(result.success){
           dispatch(addFolderCallback({path: currentDirectory, newFolderName: folderLabel}));

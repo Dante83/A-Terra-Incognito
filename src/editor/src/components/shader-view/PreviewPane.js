@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changePreviewObject, toggleIsRotating, selectCurrentPreviewPaneObject, selectIsPreviewPaneObjectRotating } from '../../application/js/features/previewPaneSlice.js';
 import { Canvas } from '@react-three/fiber';
@@ -7,6 +7,8 @@ import Sphere from './preview-objects/PreviewSphere.js';
 import Plane from './preview-objects/PreviewPlane.js';
 import PreviewImage from './preview-objects/PreviewImage.js';
 import './PreviewPane.css';
+
+const THEMES =  ['bp3-dark'];
 
 function previewObject(activePreviewObject, isRotating){
   switch(activePreviewObject){
@@ -45,16 +47,18 @@ export default function PreviewPane(){
   }
 
   return(
-    <div id="shader-preview-panel">
+    <div id="shader-preview-panel" className={THEMES}>
       <section id="shader-preview-flex-container">
         <header id="shader-preview-header">
           <h5 className="bp3-heading">Material Preview</h5>
         </header>
-        <Canvas id="shader-preview">
-          <ambientLight />
-          <pointLight position={[10, 10, 10]} />
-          {previewObject(activePreviewObject, isRotating)}
-        </Canvas>
+        <Suspense fallback={null}>
+          <Canvas id="shader-preview">
+            <ambientLight />
+            <pointLight position={[10, 10, 10]} />
+            {previewObject(activePreviewObject, isRotating)}
+          </Canvas>
+        </Suspense>
         <footer id="shader-preview-footer">
           <div id="footer-flexbox-container">
             <div id="preview-object-select-box" className="bp3-html-select .modifier">

@@ -3,6 +3,7 @@ import '@blueprintjs/core/lib/css/blueprint.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { openFolder, clearSelectedItems, addFolderToSelection, removeFileFromSelection,
 setDeleteFoldersAndFilesAlertVisibility, selectSelectedFolders } from '../../application/js/features/directoryTreeSlice.js';
+import classNames from 'classnames';
 import { ContextMenu, Menu, MenuItem, Icon } from "@blueprintjs/core";
 import './FileOrFolderType.css';
 
@@ -48,7 +49,7 @@ export default function FolderType(props){
     ContextMenu.show(menu, { left: e.clientX, top: e.clientY }, () => {}, true);
   }
 
-  const classValues = "file-or-folder-type";
+  let classValues = "file-or-folder-type";
   if(props.stringifiedDirectory in  selectedFolders){
     classValues = "selected-file-or-folder-type"
   }

@@ -1,13 +1,18 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Mosaic, MosaicWindow } from 'react-mosaic-component';
 import './EditingView.css';
 import EditorPane from './EditorPane.js';
 import '../../../node_modules/react-mosaic-component/react-mosaic-component.css';
 import '../../../node_modules/normalize.css/normalize.css';
+import classNames from 'classnames';
+import { Classes } from "@blueprintjs/core";
 import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 
-const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
+//We don't USE Blueprint 4, but frick, Mosaic just assumes it and creates classes
+//with this name to throw a wrench into our lives - even though it has this namespace thing
+//it apparently ignores?
+const THEMES = classNames('mosaic-blueprint-theme', Classes.DARK, 'bp4-dark');
 
 const ELEMENT_MAP: { [viewId: string]: JSX.Element } = {
   a: <EditorPane></EditorPane>,
@@ -35,6 +40,7 @@ export default function EditingView(){
             splitPercentage: 95,
           }}
           className={THEMES}
+          blueprintNamespace="bp3"
         />
       </div>
     </div>

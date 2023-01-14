@@ -10,8 +10,10 @@ import '../../../node_modules/react-mosaic-component/react-mosaic-component.css'
 import '../../../node_modules/normalize.css/normalize.css';
 import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
+import classNames from 'classnames';
+import { Classes } from "@blueprintjs/core";
 
-const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
+const THEMES = classNames('mosaic-blueprint-theme', Classes.DARK, 'bp4-dark');
 
 const ELEMENT_MAP: { [viewId: string]: JSX.Element } = {
   'node-graph-pane': <NodeGraphPane/>,
@@ -47,6 +49,7 @@ export default function ShaderView(){
             splitPercentage: 80,
           }}
           className={THEMES}
+          blueprintNamespace="bp3"
         />
       </div>
     </div>

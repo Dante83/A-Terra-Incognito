@@ -9,6 +9,9 @@ import { FocusStyleManager } from "@blueprintjs/core";
 import '../node_modules/normalize.css/normalize.css';
 import '../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../node_modules/@blueprintjs/core/lib/css/blueprint.css';
+import './App.css';
+
+const THEMES = ['bp3-dark'];
 
 function getActiveViewJSX(activeView){
   switch(activeView){
@@ -31,8 +34,8 @@ export default function App(){
   FocusStyleManager.onlyShowFocusOnTabs();
 
   return(
-    <div className="bp3-dark"
-    onDrop={(e)=>{e.preventDefault(); console.log(e);}}
+    <div className={THEMES}
+    onDrop={(e)=>{e.preventDefault();}}
     onDragOver={(e)=>e.preventDefault()}
     onDragEnter={(e)=>e.preventDefault()}
     onDragExit={(e)=>e.preventDefault()}>

@@ -8,12 +8,12 @@ import '../../../node_modules/normalize.css/normalize.css';
 import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 
-const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
+const THEMES = ['bp3-dark'];
 
 function deleteFile(targetURL, filePath, fileName, filePathStringPlusName, dispatch){
   fetch(targetURL + 'files/delete?deletion_path=example_project_1%2fassets%2f' + encodeURIComponent(filePathStringPlusName))
   .then((response) => {
-    const resolvedResponse = response.json().then(
+    response.json().then(
       (result) => {
         if(result.success){
           dispatch(removeFileCallback({path: filePath, fileName: fileName}));
@@ -51,7 +51,7 @@ function deleteFile(targetURL, filePath, fileName, filePathStringPlusName, dispa
 function deleteFolder(targetURL, folderPath, folderName, folderPathStringPlusName, dispatch){
   fetch(targetURL + 'folders/delete?deletion_path=example_project_1%2fassets%2f' + encodeURIComponent(folderPathStringPlusName))
   .then((response) => {
-    const resolvedResponse = response.json().then(
+    response.json().then(
       (result) => {
         if(result.success){
           dispatch(removeFolderCallback({path: folderPath, folderName: folderName}));

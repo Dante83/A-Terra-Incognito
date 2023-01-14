@@ -8,14 +8,14 @@ import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 import './NewMaterialModal.css';
 
-const THEMES = ['mosaic-blueprint-theme', 'bp3-dark'];
+const THEMES = ['bp3-dark'];
 
 function validateTextureSize(textureInputValue){
   const noBlankFormFieldsError = 'This form field cannot be left blank.';
   if(textureInputValue === null || textureInputValue === ''){
     return [noBlankFormFieldsError];
   }
-  else if((/^[1-9]\d*$/).test(textureInputValue)){
+  else if((/^[1-9]\d*$/).test(textureInputValue)){//eslint-disable-line
     const parsedValue = parseInt(textureInputValue);
     if(parsedValue < 2){
       return ['This texture dimension is too small. Please make your texture bigger. Optimally between 64-256 pixels.'];
@@ -70,7 +70,7 @@ function submitFormAction(formValues, isUpdate, createOrUpdateMaterialReducer, d
     else if(materialName.length > 64){//Name must be under 64 characters in length
       state.materialName.errors = ['The material name must not be over 64 characters in length.'];
     }
-    else if(!(/^[A-Za-z0-9_@.~\/#&+\-\s!?%^$*()-\[\]\\]*$/i).test(materialName)){
+    else if(!(/^[A-Za-z0-9_@.~\/#&+\-\s!?%^$*()-\[\]\\]*$/i).test(materialName)){//eslint-disable-line
       //Name must contain only alphanumeric characters
       state.materialName.errors = ['The material must only contain alphanumeric characters, spaces, and some special characters.'];
     }
