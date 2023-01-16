@@ -12,9 +12,6 @@ import AssetsBrowserPane from './AssetsBrowserPane.js';
 import classNames from 'classnames';
 import { Classes } from "@blueprintjs/core";
 
-//We don't USE Blueprint 4, but frick, Mosaic just assumes it and creates classes
-//with this name to throw a wrench into our lives - even though it has this namespace thing
-//it apparently ignores?
 const THEMES = classNames('mosaic-blueprint-theme', Classes.DARK, 'bp4-dark');
 
 const ELEMENT_MAP: { [viewId: string]: JSX.Element } = {
@@ -45,7 +42,7 @@ export default function AssetsView(){
             splitPercentage: 20
           }}
           className={THEMES}
-          blueprintNamespace="bp3"
+          blueprintNamespace="bp4"
         />
       </div>
     </div>

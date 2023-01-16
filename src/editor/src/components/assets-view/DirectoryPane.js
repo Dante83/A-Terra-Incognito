@@ -19,11 +19,11 @@ export default function DirectoryPane(){
         const childDirectory = [...directory, i];
         childNodeHTML.push(drawDirectory(childNode, childDirectory, childDepth));
       }
-      const childListClass = ['bp3-tree-node-list', 'bp3-elevation-' + childDepth];
-      let listItemClasses = ['bp3-tree-node', 'bp3-tree-node-expanded'];
+      const childListClass = ['bp4-tree-node-list', 'bp4-elevation-' + childDepth];
+      let listItemClasses = ['bp4-tree-node', 'bp4-tree-node-expanded'];
       listItemClasses = listItemClasses.join(' ');
       const stringifiedDirectory = JSON.stringify(directory);
-      let nodeContentClasses = ['bp3-tree-node-content']
+      let nodeContentClasses = ['bp4-tree-node-content']
       if(JSON.stringify(activeDirectory).startsWith(stringifiedDirectory)){
         nodeContentClasses.push('selected-tree-folder');
       }
@@ -32,10 +32,10 @@ export default function DirectoryPane(){
       return(<li key={key} className={listItemClasses}>
         <div className={nodeContentClasses}>
           <span data={stringifiedDirectory} onClick={(e)=>dispatch(setFolderExpanded({expanded: false, directory: e.target.attributes.data.value}))}
-            className="bp3-tree-node-caret bp3-tree-node-caret-open bp3-icon-standard"></span>
-          <span className="bp3-tree-node-icon bp3-icon-standard bp3-icon-folder-open"></span>
+            className="bp4-tree-node-caret bp4-tree-node-caret-open bp4-icon-standard"></span>
+          <span className="bp4-tree-node-icon bp4-icon-standard bp4-icon-folder-open"></span>
           <span data={stringifiedDirectory} onClick={(e)=>dispatch(openFolder(e.target.attributes.data.value))}
-          className="bp3-tree-node-label">{folder.label}</span>
+          className="bp4-tree-node-label">{folder.label}</span>
         </div>
         <ul className={childListClass}>
           {childNodeHTML}
@@ -43,36 +43,35 @@ export default function DirectoryPane(){
       </li>);
     }
     else{
-      let listItemClasses = ['bp3-tree-node'];
-      let folderIconClasses = ['bp3-tree-node-icon', 'bp3-icon-standard'];
+      let listItemClasses = ['bp4-tree-node'];
+      let folderIconClasses = ['bp4-tree-node-icon', 'bp4-icon-standard'];
       listItemClasses = listItemClasses.join(' ');
       const stringifiedDirectory = JSON.stringify(directory);
-      let nodeContentClasses = ['bp3-tree-node-content']
+      let nodeContentClasses = ['bp4-tree-node-content']
       const activeDirectoryString = JSON.stringify(activeDirectory);
       if(activeDirectoryString.startsWith(stringifiedDirectory.slice(0, -1))){
         if(activeDirectoryString === stringifiedDirectory){
           nodeContentClasses.push('selected-tree-folder');
-          folderIconClasses.push('bp3-icon-folder-open');
+          folderIconClasses.push('bp4-icon-folder-open');
         }
         else{
-          folderIconClasses.push('bp3-icon-folder-open');
+          folderIconClasses.push('bp4-icon-folder-open');
         }
       }
       else{
-        folderIconClasses.push('bp3-icon-folder-close');
+        folderIconClasses.push('bp4-icon-folder-close');
       }
       folderIconClasses = folderIconClasses.join(' ');
       nodeContentClasses = nodeContentClasses.join(' ');
 
       function dummyFunction(e){
         e.preventDefault();
-        console.log(e);
       }
 
       return(<li key={key} className={listItemClasses}>
         <div className={nodeContentClasses}>
         <span data={stringifiedDirectory} onClick={(e)=>dispatch(setFolderExpanded({expanded: true, directory: e.target.attributes.data.value}))}
-          className="bp3-tree-node-caret bp3-tree-node-caret-closed bp3-icon-standard"></span>
+          className="bp4-tree-node-caret bp4-tree-node-caret-closed bp4-icon-standard"></span>
           <span className={folderIconClasses}></span>
           <span
           data={stringifiedDirectory}
@@ -81,7 +80,7 @@ export default function DirectoryPane(){
           onDragOver={(e)=>e.preventDefault()}
           onDragEnter={(e)=>e.preventDefault()}
           onDragExit={(e)=>e.preventDefault()}
-          className="bp3-tree-node-label">{folder.label}</span>
+          className="bp4-tree-node-label">{folder.label}</span>
         </div>
       </li>);
     }
@@ -91,8 +90,8 @@ export default function DirectoryPane(){
     <div id="directory-panel">
       <section id="directory-panel-flex-container">
         <div id="directories">
-          <div className="bp3-tree bp3-elevation-0">
-            <ul className="bp3-tree-node-list bp3-tree-root">
+          <div className="bp4-tree bp4-elevation-0">
+            <ul className="bp4-tree-node-list bp4-tree-root">
               {drawDirectory(treeState[0], [0], 0)}
               {drawDirectory(treeState[1], [1], 0)}
               {drawDirectory(treeState[2], [2], 0)}

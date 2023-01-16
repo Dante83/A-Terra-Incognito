@@ -1,12 +1,12 @@
-.bp3-tree-node{
+.bp4-tree-node{
   list-style-type: none;
 }
 
-.bp3-tree-node-label{
+.bp4-tree-node-label{
   font-size: 0.75em;
 }
 
-.bp3-tree-node-label:hover{
+.bp4-tree-node-label:hover{
   cursor: default;
 }
 

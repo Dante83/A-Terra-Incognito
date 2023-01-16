@@ -8,7 +8,7 @@ import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 import './NewMaterialModal.css';
 
-const THEMES = ['bp3-dark'];
+const THEMES = ['bp4-dark'];
 
 function validateTextureSize(textureInputValue){
   const noBlankFormFieldsError = 'This form field cannot be left blank.';
@@ -203,7 +203,7 @@ export default function NewMaterialModal(){
               intent={currentModalData.outputMaterialType.errors.length > 0 ? 'danger' : 'primary'}
               helperText={currentModalData.outputMaterialType.errors.join('<br/>')}
           >
-            <div id="texture-type-selector" className="bp3-html-select .modifier bp3-fill">
+            <div id="texture-type-selector" className="bp4-html-select .modifier bp4-fill">
               <select defaultValue={'material'}>
                 <option value="material">Material</option>
                 <option value="rgba8">RGBA 8-Bit</option>
@@ -213,7 +213,7 @@ export default function NewMaterialModal(){
                 <option value="rg32">RG Channel Floating Point</option>
                 <option value="rfp32">R Channel Floating Point</option>
               </select>
-              <span className="bp3-icon bp3-icon-double-caret-vertical"></span>
+              <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
             </div>
           </FormGroup>
 
@@ -224,13 +224,13 @@ export default function NewMaterialModal(){
               intent={currentModalData.wrapS.errors.length > 0 ? 'danger' : 'primary'}
               helperText={currentModalData.wrapS.errors.join('<br/>')}
           >
-            <div id="texture-wrap-s-selector" className="bp3-html-select .modifier bp3-fill">
+            <div id="texture-wrap-s-selector" className="bp4-html-select .modifier bp4-fill">
               <select defaultValue={'repeat'}>
                 <option value="repeat">Repeat</option>
                 <option value="mirrored_repeat">Mirrored Repeat</option>
                 <option value="clamp_to_edge">Clamp To Edge</option>
               </select>
-              <span className="bp3-icon bp3-icon-double-caret-vertical"></span>
+              <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
             </div>
           </FormGroup>
 
@@ -241,13 +241,13 @@ export default function NewMaterialModal(){
               intent={currentModalData.wrapW.errors.length > 0 ? 'danger' : 'primary'}
               helperText={currentModalData.wrapW.errors.join('<br/>')}
           >
-            <div id="texture-wrap-W-selector" className="bp3-html-select .modifier bp3-fill">
+            <div id="texture-wrap-W-selector" className="bp4-html-select .modifier bp4-fill">
               <select defaultValue={'repeate'}>
                 <option value="repeat">Repeat</option>
                 <option value="mirrored_repeat">Mirrored Repeat</option>
                 <option value="clamp_to_edge">Clamp To Edge</option>
               </select>
-              <span className="bp3-icon bp3-icon-double-caret-vertical"></span>
+              <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
             </div>
           </FormGroup>
 

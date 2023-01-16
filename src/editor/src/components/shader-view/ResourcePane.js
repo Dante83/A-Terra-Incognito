@@ -12,9 +12,9 @@ export default function ResourcePane(){
   const canDelete = activeMaterialName !== "Terrain Heightmap" && activeMaterialName !== "Terrain Material Map";
   const dispatch = useDispatch();
 
-  let deleteButtonClasses = "bp3-button bp3-intent-danger hidden";
+  let deleteButtonClasses = "bp4-button bp4-intent-danger hidden";
   if(canDelete){
-    deleteButtonClasses = "bp3-button bp3-intent-danger";
+    deleteButtonClasses = "bp4-button bp4-intent-danger";
   }
 
   const materialSelectionList = [];
@@ -31,8 +31,8 @@ export default function ResourcePane(){
     if(materialName !== activeMaterialName){
       materialSelectionList.push(
           <ContextMenu2 key={materialName} content={menuOptions()}>
-            <div className="bp3-button-group bp3-fill bp3-vertical">
-              <span className="bp3-button" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))}>{materialName}</span>
+            <div className="bp4-button-group bp4-fill bp4-vertical">
+              <span className="bp4-button" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))}>{materialName}</span>
             </div>
           </ContextMenu2>
       );
@@ -40,8 +40,8 @@ export default function ResourcePane(){
     else{
       materialSelectionList.push(
           <ContextMenu2 key={materialName} content={menuOptions()}>
-            <div className="bp3-button-group bp3-fill bp3-vertical">
-              <span className="bp3-button" id="selected-material-button" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))}>{materialName}</span>
+            <div className="bp4-button-group bp4-fill bp4-vertical">
+              <span className="bp4-button" id="selected-material-button" onClick={(e)=>dispatch(viewMaterialGraph(e.target.innerText))}>{materialName}</span>
             </div>
           </ContextMenu2>
       );
@@ -52,7 +52,7 @@ export default function ResourcePane(){
     <div id="material-selector-panel">
       <section id="material-selector-flex-container">
         <header id="material-selector-header">
-          <h5 className="bp3-heading">Material Shaders</h5>
+          <h5 className="bp4-heading">Material Shaders</h5>
         </header>
         <div id="material-selector-list-container">
           <div id="material-selector-list-flex-box">
@@ -61,12 +61,12 @@ export default function ResourcePane(){
           </div>
         </div>
         <footer id="material-selector-footer">
-          <div className="bp3-button-group" id="add-delete-shader-buttons">
-            <button className="bp3-button bp3-intent-primary" id="add-shader-button" onClick={(e)=>dispatch(create(true))} >
-              <span className="bp3-icon bp3-icon-add" icon="add"></span>
+          <div className="bp4-button-group" id="add-delete-shader-buttons">
+            <button className="bp4-button bp4-intent-primary" id="add-shader-button" onClick={(e)=>dispatch(create(true))} >
+              <span className="bp4-icon bp4-icon-add" icon="add"></span>
             </button>
             <button className={deleteButtonClasses} id="request-prompt-to-remove-shader-button" onClick={(e)=>dispatch(showRemoveMaterialAlert(e.target.innerText))}>
-              <span className="bp3-icon bp3-icon-remove" icon="remove"></span>
+              <span className="bp4-icon bp4-icon-remove" icon="remove"></span>
             </button>
           </div>
         </footer>

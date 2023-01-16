@@ -35,7 +35,6 @@ export function configureVectorMathNode(config){
           return [ports.float({name: 'float', label: 'Float'})];
         }
         else if(selectedOperation === 'norm'){
-          console.log("norm out");
           return [ports[`vec${operand1Size}`]({name: `vec${operand1Size}`, label: `${operand1Size}-Vector`})];
         }
         else if(selectedOperation === 'expand_size'){

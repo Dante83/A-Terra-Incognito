@@ -8,7 +8,7 @@ import Plane from './preview-objects/PreviewPlane.js';
 import PreviewImage from './preview-objects/PreviewImage.js';
 import './PreviewPane.css';
 
-const THEMES =  ['bp3-dark'];
+const THEMES =  ['bp4-dark'];
 
 function previewObject(activePreviewObject, isRotating){
   switch(activePreviewObject){
@@ -34,23 +34,23 @@ export default function PreviewPane(){
   let pausePreviewButtonClasses;
   let playPreviewButtonClasses;
   if(activePreviewObject === "image"){
-    playPreviewButtonClasses = "bp3-button bp3-intent-primary hidden";
-    pausePreviewButtonClasses = "bp3-button bp3-intent-warning hidden";
+    playPreviewButtonClasses = "bp4-button bp4-intent-primary hidden";
+    pausePreviewButtonClasses = "bp4-button bp4-intent-warning hidden";
   }
   else if(isRotating){
-    playPreviewButtonClasses = "bp3-button bp3-intent-primary hidden";
-    pausePreviewButtonClasses = "bp3-button bp3-intent-warning";
+    playPreviewButtonClasses = "bp4-button bp4-intent-primary hidden";
+    pausePreviewButtonClasses = "bp4-button bp4-intent-warning";
   }
   else{
-    playPreviewButtonClasses = "bp3-button bp3-intent-primary";
-    pausePreviewButtonClasses = "bp3-button bp3-intent-warning hidden";
+    playPreviewButtonClasses = "bp4-button bp4-intent-primary";
+    pausePreviewButtonClasses = "bp4-button bp4-intent-warning hidden";
   }
 
   return(
     <div id="shader-preview-panel" className={THEMES}>
       <section id="shader-preview-flex-container">
         <header id="shader-preview-header">
-          <h5 className="bp3-heading">Material Preview</h5>
+          <h5 className="bp4-heading">Material Preview</h5>
         </header>
         <Suspense fallback={null}>
           <Canvas id="shader-preview">
@@ -61,21 +61,21 @@ export default function PreviewPane(){
         </Suspense>
         <footer id="shader-preview-footer">
           <div id="footer-flexbox-container">
-            <div id="preview-object-select-box" className="bp3-html-select .modifier">
+            <div id="preview-object-select-box" className="bp4-html-select .modifier">
               <select defaultValue={activePreviewObject} onChange={(e)=>dispatch(changePreviewObject(e.target.value))}>
                 <option value="cube">Cube</option>
                 <option value="sphere">Sphere</option>
                 <option value="plane">Plane</option>
                 <option value="image">Image</option>
               </select>
-              <span className="bp3-icon bp3-icon-double-caret-vertical"></span>
+              <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
             </div>
             <div id="preview-play-pause-buttons">
               <button className={pausePreviewButtonClasses} id="pause-preview-button" onClick={(e)=>dispatch(toggleIsRotating(false))}>
-                  <span className="bp3-icon bp3-icon-pause" icon="pause"></span>
+                  <span className="bp4-icon bp4-icon-pause" icon="pause"></span>
               </button>
               <button className={playPreviewButtonClasses} id="pause-preview-button" onClick={(e)=>dispatch(toggleIsRotating(true))}>
-                <span className="bp3-icon bp3-icon-play" icon="play"></span>
+                <span className="bp4-icon bp4-icon-play" icon="play"></span>
               </button>
             </div>
           </div>

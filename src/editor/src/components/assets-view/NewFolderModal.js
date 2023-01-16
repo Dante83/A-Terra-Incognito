@@ -9,7 +9,7 @@ import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 import './NewFolderModal.css';
 
-const THEMES = ['bp3-dark'];
+const THEMES = ['bp4-dark'];
 
 async function makeCreateFolderRequest(dispatch, targetURL, targetDirectory, folderLabel, currentDirectory){
   //TODO: This is just an example URL, killing CORS is probably a bad idea

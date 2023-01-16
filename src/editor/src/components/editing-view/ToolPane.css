@@ -1,0 +1,33 @@
+#tool-selector-panel{
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#tool-selector-flex-container{
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  flex: 2;
+}
+
+#tool-selector-list-container{
+  flex: 2;
+}
+
+#tool-selector-list-flex-box{
+  display: flex;
+  flex-flow: row wrap;
+}
+
+#tool-selector-list-filler{
+  width: 100%;
+  flex-grow: 2;
+}
+
+.edit-view-tool-button{
+  padding: 0.1em;
+}

@@ -5,6 +5,7 @@ import { materialListPaneReducer } from './features/materialListPaneSlice.js';
 import { newMaterialModalReducer } from './features/newMaterialModalSlice.js';
 import { directoryTreeReducer } from './features/directoryTreeSlice.js';
 import { newFolderModalReducer } from './features/newFolderModalSlice.js';
+import { landEditorReducer } from './features/landEditorSlice.js';
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     newMaterialModal: newMaterialModalReducer,
     directoryTree: directoryTreeReducer,
     newFolderModal: newFolderModalReducer,
+    landEditor: landEditorReducer,
   }
 });

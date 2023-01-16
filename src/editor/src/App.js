@@ -11,7 +11,7 @@ import '../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 import './App.css';
 
-const THEMES = ['bp3-dark'];
+const THEMES = ['bp4-dark'];
 
 function getActiveViewJSX(activeView){
   switch(activeView){

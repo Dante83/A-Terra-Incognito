@@ -24,10 +24,10 @@ export default class Toolstrip extends Component {
       <Navbar>
         <Navbar.Group align={Alignment.LEFT}>
           <Popover content={<FileMenu/>} position={Position.BOTTOM_LEFT}>
-              <Button className="bp3-button bp3-minimal">File</Button>
+              <Button className="bp4-button bp4-minimal">File</Button>
           </Popover>
           <Popover content={<EditMenu selectedTabId={activeView}/>} position={Position.BOTTOM_LEFT}>
-              <Button className="bp3-button bp3-minimal">Edit</Button>
+              <Button className="bp4-button bp4-minimal">Edit</Button>
           </Popover>
           <Navbar.Divider />
           <Tabs id="viewport-selector-tabs" onChange={this.onChangeView} selectedTabId={activeView}>

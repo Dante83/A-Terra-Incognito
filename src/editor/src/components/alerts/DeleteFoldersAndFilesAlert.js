@@ -8,7 +8,7 @@ import '../../../node_modules/normalize.css/normalize.css';
 import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 
-const THEMES = ['bp3-dark'];
+const THEMES = ['bp4-dark'];
 
 function deleteFile(targetURL, filePath, fileName, filePathStringPlusName, dispatch){
   fetch(targetURL + 'files/delete?deletion_path=example_project_1%2fassets%2f' + encodeURIComponent(filePathStringPlusName))

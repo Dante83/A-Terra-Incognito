@@ -49,7 +49,7 @@ export default function ShaderView(){
             splitPercentage: 80,
           }}
           className={THEMES}
-          blueprintNamespace="bp3"
+          blueprintNamespace="bp4"
         />
       </div>
     </div>
