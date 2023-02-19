@@ -1,12 +1,11 @@
 import React from 'react';
 import { useFrame } from '@react-three/fiber';
-import * as THREE from "three";
+import { BufferGeometry, BufferAttribute } from "three";
 import { useSelector, useDispatch } from 'react-redux';
 
-const TerrainTile = (props) => {
-
-
-  //size, numTiles, top, right, bottom, left
+//A false for any of the top, right, bottom or left values
+//means we're transitioning to a lower value.
+export function terrainChunk(size, numTiles, top, right, bottom, left){
   const totalNumberOfTiles = numTiles * numTiles;
   const numberOfInnerTiles = Math.max(numTiles - 2, 0) * (numTiles - 2);
   const numberOfEdgeTiles = totalNumberOfTiles - numberOfInnerTiles;
@@ -15,8 +14,18 @@ const TerrainTile = (props) => {
   const totalNumberOfTriangles = 8 * numberOfInnerTiles + 28 * tilesOnAnEdge + (tilesOnAnEdge + Math.min(4, numberOfEdgeTiles)) * (4 + top + right + bottom + left);
   const numberOfVertices = totalNumberOfTriangles * 3;
   const vertexCoordinates = new Float32Array(numberOfVertices * 3);
+  const normals = new Float32Array(numberOfVertices * 3);
+  const uvs = new Float32Array(numberOfVertices * 2);
+  const tangents = new Float32Array(numberOfVertices * 3);
+  const bitangents = new Float32Array(numberOfVertices * 3);
+  for(let i = 0; i < numberOfVertices; ++i){
+    normals[i * 3 + 1] = 1.0; //Y is Normal
+    tangents[i * 3] = 1.0; //X is Tangent
+    bitangents[i * 3 + 2] = -1.0; //Z is bitangent
+  }
   const numTilesMinusOne = numTiles - 1;
   let vindex = 0;
+  let triIndex = 0;
   for(let x = 0; x < numTiles; ++x){
     const rightTriSkip = x === numTilesMinusOne && !right;
     const leftTriSkip = x === 0 && !left;
@@ -41,33 +50,26 @@ const TerrainTile = (props) => {
           vertexCoordinates[vindex + 2 * (!flipXY)] = scaler * (1.0 + 2 * (flipXY ? x : y) + (flipXY ? xSign : ySign) * ((triV + (!segment)) % 2));
           vindex += 3;
         }
+
+        triIndex++;
       }
     }
   }
 
-  const ref = useRef();
-  const vertices = useMemo(() => cubeVertices.map(v => new THREE.Vector3(...v)), []);
+  //Set up all UV-Coordinates
+  for(let i = 0; i < numberOfVertices; ++i){
+    uvs[i * 2] = vertexCoordinates[i * 3] / size;
+    uvs[i * 2 + 1] = vertexCoordinates[i * 3 + 2] / size;
+  }
 
-  useFrame(() => {
-    mesh.current.rotation.x = mesh.current.rotation.y += 0.01;
-  });
-
-  return (
-    <mesh ref={ref}>
-      <bufferGeometry attach="geometry" vertices={vertexCoordinates} onUpdate={self => self.computeFaceNormals()} />
-      <shaderMaterial attach="material" {...data} />
-    </mesh>
-  );
-}
-
-function setupTerrainTiles(){
-
-}
-
-export default Terrain = (props) => {
-  //Grab the camera position, resolve to the nearest grid position and draw a ray to it and determine the LOD
-
-  //Starting with that position work our way outwards and downgrade the resolution as we go.
-
-  //Create all these meshes using the mesh method above to draw them to the canvas
-}
+  //Set up all indices
+  const vertexCount = vertexCoordinates.length / 3;
+  let geometry = new BufferGeometry();
+  geometry.setAttribute( 'position', new BufferAttribute( vertexCoordinates, 3 ) );
+  geometry.setAttribute( 'normal', new BufferAttribute( normals, 3 ) );
+  geometry.normalizeNormals();
+  geometry.setAttribute( 'uv', new BufferAttribute( uvs, 2 ) );
+  geometry.setAttribute( 'tangent', new BufferAttribute( tangents, 3 ) );
+  geometry.setAttribute( 'bitangent', new BufferAttribute( bitangents, 3 ) );
+  return geometry;
+};

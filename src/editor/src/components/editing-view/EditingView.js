@@ -12,34 +12,21 @@ import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 
 const THEMES = classNames('mosaic-blueprint-theme', Classes.DARK, 'bp4-dark');
 
-const ELEMENT_MAP: { [viewId: string]: JSX.Element } = {
-  a: <EditorPane></EditorPane>,
-  b: <ToolPane></ToolPane>,
-};
+// const ELEMENT_MAP: { [viewId: string]: JSX.Element } = {
+//   a: <EditorPane></EditorPane>,
+//   b: <ToolPane></ToolPane>,
+// };
 
 export default function EditingView(){
   return (
     <div id="view-container">
       <div id="view-space">
-        <Mosaic
-          id="view-pane-container"
-          renderTile={(id, path) => (
-            <MosaicWindow
-              path={path}
-              createNode={() => 'new'}
-              title={ELEMENT_MAP[id]}>
-              <h1>{ELEMENT_MAP[id]}</h1>
-            </MosaicWindow>
-          )}
-          initialValue={{
-            direction: 'row',
-            first: 'a',
-            second: 'b',
-            splitPercentage: 95,
-          }}
-          className={THEMES}
-          blueprintNamespace="bp4"
-        />
+        <div id="editor-pane-holder">
+          <EditorPane></EditorPane>
+        </div>
+        <div id="tool-pane-holder">
+          <ToolPane></ToolPane>
+        </div>
       </div>
     </div>
   );

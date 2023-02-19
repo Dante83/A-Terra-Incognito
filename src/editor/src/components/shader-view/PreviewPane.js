@@ -53,7 +53,7 @@ export default function PreviewPane(){
           <h5 className="bp4-heading">Material Preview</h5>
         </header>
         <Suspense fallback={null}>
-          <Canvas id="shader-preview">
+          <Canvas concurrent id="shader-preview">
             <ambientLight />
             <pointLight position={[10, 10, 10]} />
             {previewObject(activePreviewObject, isRotating)}

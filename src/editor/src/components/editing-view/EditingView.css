@@ -6,6 +6,24 @@
 
 #view-space{
   flex: 1;
+  display: flex;
+}
+
+#editor-pane-holder{
+  position: relative;
+  width: calc(100% - 90px);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#tool-pane-holder{
+  position: relative;
+  width: 90px;
+  height: 100%;
+  background-color: #252a31;
+  margin: 0;
+  padding: 0;
 }
 
 .mosaic-window-toolbar{

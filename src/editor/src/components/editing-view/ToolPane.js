@@ -2,19 +2,17 @@ import React from 'react';
 import { Menu, MenuItem } from "@blueprintjs/core";
 import { useSelector, useDispatch } from 'react-redux';
 import { selectActiveTool, setActiveTool } from '../../application/js/features/landEditorSlice.js';
-import { faArrowsUpDownLeftRight, faObjectGroup, faWandMagicSparkles, faPaintbrush,
-faFillDrip, faHandPointUp, faTrowel } from "@fortawesome/free-solid-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './ToolPane.css';
+import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
+import '@fortawesome/fontawesome-free/css/solid.min.css';
 
 export default function ResourcePane(){
   const activeToolName = useSelector(selectActiveTool);
   const dispatch = useDispatch();
 
   const toolNameList = ['move', 'select', 'magicwand', 'paintbrush', 'paintbucket', 'blend', 'level'];
-  const iconList = [faArrowsUpDownLeftRight, faObjectGroup, faWandMagicSparkles, faPaintbrush,
-  faFillDrip, faHandPointUp, faTrowel];
+  const iconList = ['fa-arrows', 'fa-object-group', 'fa-wand-magic-sparkles', 'fa-paint-brush',
+  'fa-fill-drip', 'fa-hand-pointer-o', 'fa-trowel'];
   let tools = [];
   for(let i = 0, numElements = toolNameList.length; i < numElements; ++i){
     const toolName = toolNameList[i];
@@ -25,7 +23,7 @@ export default function ResourcePane(){
       tools.push(
         <div key={key} className="edit-view-tool-button">
           <span id={key} className="bp4-button bp4-active" onClick={(e)=>dispatch(setActiveTool(e.target.id))}>
-            <FontAwesomeIcon id={faIconId} icon={icon} />
+            <i id={faIconId} className={`fa-solid ${icon}`} onClick={(e)=>dispatch(setActiveTool(e.target.id))}></i>
           </span>
         </div>
       );
@@ -34,7 +32,7 @@ export default function ResourcePane(){
       tools.push(
         <div key={key} className="edit-view-tool-button">
           <span id={key} className="bp4-button" id="selected-tool-button">
-            <FontAwesomeIcon icon={icon} />
+            <i className={`fa-solid ${icon}`}></i>
           </span>
         </div>
       );
@@ -46,6 +44,7 @@ export default function ResourcePane(){
       <section id="tool-selector-flex-container">
         <div id="tool-selector-list-container">
           <div id="tool-selector-list-flex-box">
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossOrigin="anonymous"/>
             { tools }
             <div div="tool-selector-list-filler"></div>
           </div>
